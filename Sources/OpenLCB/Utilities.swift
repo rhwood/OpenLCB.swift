@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import Foundation
+
 struct Utilities {
     
     /// Create a [UInt8] from a number. This does not protect against count being incorrect.
