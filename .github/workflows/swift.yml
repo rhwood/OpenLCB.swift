@@ -1,0 +1,54 @@
+---
+name: Swift
+
+on:
+  push:
+    branches: [
+      main
+    ]
+  pull_request:
+    branches: [
+      main
+    ]
+
+jobs:
+  build:
+    name: "OpenLCB.swift unit tests"
+
+    # Only needed if introducing platform-specific capabilities
+    #strategy:
+    #  matrix:
+    #    destination: [
+    #      "'platform=macOS,variant=Mac Catalyst'",
+    #      "'platform=macOS'",
+    #      "'platform=tvOS Simulator,name=Apple TV'",
+    #      "'platform=iOS Simulator,name=iPhone 8'",
+    #      "'platform=watchOS Simulator,name=Apple Watch Series 4 - 40mm'"
+    #    ]
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 50
+      # Use default Xcode version
+      #- name: Set Xcode version
+      #  run: sudo xcode-select -s /Applications/Xcode_13.2.1.app
+      - name: Build
+        # Using swift would be preferred, but using xcodebuild as it allows
+        # the specification of variants, which the swift command does not
+        #run: xcodebuild build -scheme WMATAUI -destination ${{ matrix.destination }}
+        run: swift build -v
+      - name: Run tests
+        # Using swift would be preferred, but using xcodebuild as it allows
+        # the specification of variants, which the swift command does not
+        #run: |
+        #  xcodebuild test -scheme WMATAUI -destination ${{ matrix.destination }} -enableCodeCoverage YES
+        #  xcrun llvm-cov export --format="lcov" --instr-profile=$( echo ~/Library/Developer/Xcode/DerivedData/WMATAUI-*/Build/ProfileData/*/Coverage.profdata ) --object=$( echo ~/Library/Developer/Xcode/DerivedData/WMATAUI-*/Build/Products/Debug*/WMATAUI.o ) > coverage.lcov
+        run: swift test --enable-code-coverage -v
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: OpenLCB.json
+          fail_ci_if_error: true
+          verbose: true
