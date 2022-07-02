@@ -1,0 +1,106 @@
+//
+//  NodeIdTest.swift
+//  
+//
+//  Created by Randall Wood on 6/20/22.
+//
+
+@testable import OpenLCB
+import XCTest
+
+class NodeIdTests: XCTestCase {
+
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+
+    func testEmptyInit() {
+        let e1: NodeId = NodeId()
+        XCTAssertEqual([0,0,0,0,0,0], e1.bytes)
+    }
+
+    func testTooLongBytes() throws {
+        let e1 = try NodeId(bytes: [1,2,3,4,5,6,7])
+        let e2 = try NodeId(bytes: [1,2,3,4,5,6])
+        XCTAssertEqual(e1, e2)
+    }
+    
+    func testTooShortBytes() {
+        XCTAssertThrowsError(try NodeId(bytes: [1,2,3,4,5]))
+    }
+    
+    func testOkBytes() {
+        XCTAssertEqual([1,2,3,4,5,6], try NodeId(bytes: [1,2,3,4,5,6]).bytes)
+    }
+
+    func testEmptyStringValue() {
+        XCTAssertThrowsError(try NodeId(value: ""))
+    }
+    
+    func testTooLongStringValue() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        let e2 = try NodeId(value: "1.2.3.4.5.6.7")
+        XCTAssertEqual(e1, e2)
+    }
+    
+    func testTooShortStringValue() throws {
+        XCTAssertThrowsError(try NodeId(value: "1 2 3 4 5"))
+    }
+
+    func testOkStringValue() throws {
+        let e1 = try NodeId(value: "1 2 3 4 5 6")
+        let e2 = try NodeId(value: "1.2.3.4.5.6")
+        XCTAssertEqual(e1, e2)
+    }
+
+    func testInt() throws {
+        let e = NodeId(value: 0x998877FFEEDD)
+        XCTAssertEqual([153, 136, 119, 255, 238, 221], e.bytes)
+        XCTAssertEqual("99.88.77.FF.EE.DD", e.description)
+    }
+
+    func testNodeInit() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        let e2 = NodeId(node: e1)
+        XCTAssertEqual(e1, e2)
+    }
+
+    func testEqualsSame() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        let e2 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        XCTAssertEqual(e1, e2)
+    }
+    
+    func testEqualsSameString() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        let e2 = try NodeId(value: "1.2.3.4.5.6")
+        XCTAssertEqual(e1, e2)
+    }
+    
+    func testEqualsSelf() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        XCTAssertEqual(e1, e1)
+    }
+    
+    func testNotEquals() throws {
+        let e1 = try NodeId(bytes: [1, 2, 3, 4, 5, 6])
+        let e2 = try NodeId(bytes: [6, 5, 4, 3, 2, 1])
+        XCTAssertNotEqual(e1, e2)
+    }
+    
+    func testOutputFormat() throws {
+        XCTAssertEqual("01.10.13.0D.D0.AB", try NodeId(bytes: [1,0x10,0x13,0x0D,0xD0,0xAB]).description)
+    }
+
+    func testRawValue() throws {
+        let e = NodeId(rawValue: 0x010203040506)
+        XCTAssertNotNil(e)
+        XCTAssertEqual(0x010203040506, e?.rawValue)
+        XCTAssertNotNil(NodeId(rawValue: 0x000000000000))
+        XCTAssertNotNil(NodeId(rawValue: 0xFFFFFFFFFFFF))
+    }
+}
