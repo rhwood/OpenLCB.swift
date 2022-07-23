@@ -1,4 +1,4 @@
-codecov:
-  disable_default_path_fixes: true
+#codecov:
+#  disable_default_path_fixes: true
 fixes:
-  - "/Users/runner/work/OpenLCB.swift/OpenLCB.swift/::"
+  - "/Users/runner/work/OpenLCB.swift/OpenLCB.swift::"
