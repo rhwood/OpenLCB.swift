@@ -45,11 +45,13 @@ jobs:
         #run: |
         #  xcodebuild test -scheme WMATAUI -destination ${{ matrix.destination }} -enableCodeCoverage YES
         #  xcrun llvm-cov export --format="lcov" --instr-profile=$( echo ~/Library/Developer/Xcode/DerivedData/WMATAUI-*/Build/ProfileData/*/Coverage.profdata ) --object=$( echo ~/Library/Developer/Xcode/DerivedData/WMATAUI-*/Build/Products/Debug*/WMATAUI.o ) > coverage.lcov
-        run: swift test --enable-code-coverage -v
+        run: |
+          swift test --enable-code-coverage -v
+          llvm-cov export --format="lcov" ./build/debug/OpenLCVPackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
-          files: OpenLCB.json
+          files: info.lcov
           fail_ci_if_error: true
           verbose: true
           root_dir: /Users/runner/work/OpenLCB.swift/OpenLCB.swift
