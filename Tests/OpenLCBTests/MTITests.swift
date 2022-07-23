@@ -19,52 +19,66 @@ class MTITests: XCTestCase {
     }
 
     func testStreamOrDatagram() {
-        XCTAssertFalse(CommonMTI.initializationCompleteFullProtocolRequired.rawValue.streamOrDatagram)
-        XCTAssertFalse(MTI(value: 0x05EB).streamOrDatagram)
-        XCTAssertTrue(MTI(value: 0x1C48).streamOrDatagram)
-        XCTAssertFalse(MTI(value: 0x2000).streamOrDatagram)
+        XCTAssertFalse(CommonMTI.initializationComplete.rawValue.streamOrDatagram)
+        XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.streamOrDatagram)
+        XCTAssertTrue(CommonMTI.datagram.rawValue.streamOrDatagram)
+        XCTAssertFalse(CommonMTI.nodeNumberAllocate.rawValue.streamOrDatagram)
+        XCTAssertTrue(MTI(value: 0xFFFF).streamOrDatagram)
+        XCTAssertFalse(MTI(value: 0x0000).streamOrDatagram)
     }
 
     func testPriority() {
-        XCTAssertEqual(0, CommonMTI.initializationCompleteFullProtocolRequired.rawValue.priority)
-        XCTAssertEqual(1, MTI(value: 0x05EB).priority)
-        XCTAssertEqual(3, MTI(value: 0x1C48).priority)
-        XCTAssertEqual(0, MTI(value: 0x2000).priority)
+        XCTAssertEqual(0, CommonMTI.initializationComplete.rawValue.priority)
+        XCTAssertEqual(1, CommonMTI.tractionControlCommand.rawValue.priority)
+        XCTAssertEqual(3, CommonMTI.datagram.rawValue.priority)
+        XCTAssertEqual(0, CommonMTI.nodeNumberAllocate.rawValue.priority)
+        XCTAssertEqual(3, MTI(value: 0xFFFF).priority)
+        XCTAssertEqual(0, MTI(value: 0x0000).priority)
     }
 
     func testType() {
-        XCTAssertEqual(8, CommonMTI.initializationCompleteFullProtocolRequired.rawValue.type)
-        XCTAssertEqual(15, MTI(value: 0x05EB).type)
-        XCTAssertEqual(2, MTI(value: 0x1C48).type)
-        XCTAssertEqual(0, MTI(value: 0x2000).type)
+        XCTAssertEqual(8, CommonMTI.initializationComplete.rawValue.type)
+        XCTAssertEqual(15, CommonMTI.tractionControlCommand.rawValue.type)
+        XCTAssertEqual(2, CommonMTI.datagram.rawValue.type)
+        XCTAssertEqual(0, CommonMTI.nodeNumberAllocate.rawValue.type)
+        XCTAssertEqual(31, MTI(value: 0xFFFF).type)
+        XCTAssertEqual(0, MTI(value: 0x0000).type)
     }
 
     func testSimpleProtocol() {
-        XCTAssertFalse(CommonMTI.initializationCompleteFullProtocolRequired.rawValue.simpleProtocol)
-        XCTAssertFalse(MTI(value: 0x05EB).simpleProtocol)
-        XCTAssertFalse(MTI(value: 0x1C48).simpleProtocol)
-        XCTAssertFalse(MTI(value: 0x2000).simpleProtocol)
+        XCTAssertFalse(CommonMTI.initializationComplete.rawValue.simpleProtocol)
+        XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.simpleProtocol)
+        XCTAssertFalse(CommonMTI.datagram.rawValue.simpleProtocol)
+        XCTAssertFalse(CommonMTI.nodeNumberAllocate.rawValue.simpleProtocol)
+        XCTAssertTrue(MTI(value: 0xFFFF).simpleProtocol)
+        XCTAssertFalse(MTI(value: 0x0000).simpleProtocol)
     }
 
     func testAddressPresent() throws {
-        XCTAssertFalse(CommonMTI.initializationCompleteFullProtocolRequired.rawValue.addressPresent)
-        XCTAssertTrue(MTI(value: 0x05EB).addressPresent)
-        XCTAssertTrue(MTI(value: 0x1C48).addressPresent)
-        XCTAssertFalse(MTI(value: 0x2000).addressPresent)
+        XCTAssertFalse(CommonMTI.initializationComplete.rawValue.addressPresent)
+        XCTAssertTrue(CommonMTI.tractionControlCommand.rawValue.addressPresent)
+        XCTAssertTrue(CommonMTI.datagram.rawValue.addressPresent)
+        XCTAssertFalse(CommonMTI.nodeNumberAllocate.rawValue.addressPresent)
+        XCTAssertTrue(MTI(value: 0xFFFF).eventPresent)
+        XCTAssertFalse(MTI(value: 0x0000).eventPresent)
     }
 
     func testEventPresent() throws {
-        XCTAssertFalse(CommonMTI.initializationCompleteFullProtocolRequired.rawValue.eventPresent)
-        XCTAssertFalse(MTI(value: 0x05EB).eventPresent)
-        XCTAssertFalse(MTI(value: 0x1C48).eventPresent)
-        XCTAssertFalse(MTI(value: 0x2000).eventPresent)
+        XCTAssertFalse(CommonMTI.initializationComplete.rawValue.eventPresent)
+        XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.eventPresent)
+        XCTAssertFalse(CommonMTI.datagram.rawValue.eventPresent)
+        XCTAssertFalse(CommonMTI.nodeNumberAllocate.rawValue.eventPresent)
+        XCTAssertTrue(MTI(value: 0xFFFF).eventPresent)
+        XCTAssertFalse(MTI(value: 0x0000).eventPresent)
     }
 
     func testModifier() throws {
-        XCTAssertEqual(0, CommonMTI.initializationCompleteFullProtocolRequired.rawValue.modifier)
-        XCTAssertEqual(3, MTI(value: 0x05EB).modifier)
-        XCTAssertEqual(0, MTI(value: 0x1C48).modifier)
-        XCTAssertEqual(0, MTI(value: 0x2000).modifier)
+        XCTAssertEqual(0, CommonMTI.initializationComplete.rawValue.modifier)
+        XCTAssertEqual(3, CommonMTI.tractionControlCommand.rawValue.modifier)
+        XCTAssertEqual(0, CommonMTI.datagram.rawValue.modifier)
+        XCTAssertEqual(0, CommonMTI.nodeNumberAllocate.rawValue.modifier)
+        XCTAssertEqual(3, MTI(value: 0xFFFF).modifier)
+        XCTAssertEqual(0, MTI(value: 0x0000).modifier)
     }
 
 }
