@@ -55,7 +55,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public var rawValue: RawValue {
-        Utilities.uInt64FromBytes(self.bytes)
+        self.id
     }
 
     public var description: String {

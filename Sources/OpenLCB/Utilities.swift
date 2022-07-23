@@ -97,5 +97,58 @@ struct Utilities {
             (value << 8) | UInt64(byte)
         }
     }
+
+    static public func bits<T: FixedWidthInteger>(_ bytes: T) -> [Bit] {
+        bytes.bits
+    }
 }
- 
+
+// source: https://stackoverflow.com/a/51770616
+public enum Bit: UInt8, CustomStringConvertible {
+    case zero, one
+
+    public var description: String {
+        switch self {
+        case .one:
+            return "1"
+        case .zero:
+            return "0"
+        }
+    }
+}
+
+/// Lazily compute, but not recompute, a var in a struct
+// source: https://stackoverflow.com/a/51734402
+class LazyVar<Object, Property> {
+    let block:(Object)->Property
+    private var cache:Property? = nil
+
+    init(_ block:@escaping (Object)->Property) {
+        self.block = block
+    }
+
+    func lazy(_ input:Object) -> Property {
+        if self.cache == nil {
+            self.cache = self.block(input)
+        }
+        return self.cache!
+    }
+}
+
+// source: https://stackoverflow.com/a/51770616
+extension FixedWidthInteger {
+    var bits: [Bit] {
+        var bytes = self
+        // Fill an array of bits with zeros to the fixed width integer length
+        var bits = [Bit](repeating: .zero, count: self.bitWidth)
+        // Run through each bit (LSB first)
+        for i in 0..<self.bitWidth {
+            let currentBit = bytes & 0x01
+            if currentBit != 0 {
+                bits[i] = .one
+            }
+            bytes >>= 1
+        }
+        return bits
+    }
+}

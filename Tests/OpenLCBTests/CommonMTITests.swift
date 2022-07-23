@@ -26,7 +26,11 @@ class CommonMTITests: XCTestCase {
     }
 
     func testDescription() throws {
-        XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationComplete)")
+        XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationCompleteFullProtocolRequired)")
+        XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationCompleteSimpleSetSufficient)")
+        XCTAssertEqual("Verify Node ID Number", "\(CommonMTI.verifyNodeIDNumberAddressed)")
+        XCTAssertEqual("Verify Node ID Number", "\(CommonMTI.verifyNodeIDNumberGlobal)")
+        XCTAssertEqual("Verified Node ID Number", "\(CommonMTI.verifiedNodeIDNumber)")
     }
 
 }
