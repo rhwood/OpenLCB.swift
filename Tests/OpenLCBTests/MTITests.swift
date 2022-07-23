@@ -18,6 +18,21 @@ class MTITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    func testRawValueInit() {
+        XCTAssertNotNil(MTI(rawValue: 0x0000))
+        XCTAssertNotNil(MTI(rawValue: 0xFFFF))
+        XCTAssertEqual(MTI(rawValue: 0x1234), MTI(value: 0x1234))
+    }
+
+    func testSpecial() {
+        XCTAssertFalse(CommonMTI.initializationComplete.rawValue.special)
+        XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.special)
+        XCTAssertFalse(CommonMTI.datagram.rawValue.special)
+        XCTAssertTrue(CommonMTI.nodeNumberAllocate.rawValue.special)
+        XCTAssertTrue(MTI(value: 0xFFFF).special)
+        XCTAssertFalse(MTI(value: 0x0000).special)
+    }
+
     func testStreamOrDatagram() {
         XCTAssertFalse(CommonMTI.initializationComplete.rawValue.streamOrDatagram)
         XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.streamOrDatagram)
