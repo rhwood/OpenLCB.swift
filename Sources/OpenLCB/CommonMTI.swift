@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-public enum CommonMTI: UInt16, RawRepresentable, CustomStringConvertible {
+public enum CommonMTI: MTI, RawRepresentable, CustomStringConvertible {
 
-    case initializationComplete = 0x0100
+    case initializationCompleteFullProtocolRequired = 0x0100
+    case initializationCompleteSimpleSetSufficient = 0x0101
     case verifyNodeIDNumberAddressed = 0x0488
     case verifyNodeIDNumberGlobal = 0x0490
     case verifiedNodeIDNumber = 0x0170
 
     public var description: String {
         switch self {
-        case .initializationComplete: return "Initialization Complete"
+        case .initializationCompleteFullProtocolRequired, .initializationCompleteSimpleSetSufficient: return "Initialization Complete"
         case .verifyNodeIDNumberAddressed, .verifyNodeIDNumberGlobal: return "Verify Node ID Number"
         case .verifiedNodeIDNumber: return "Verified Node ID Number"
         }

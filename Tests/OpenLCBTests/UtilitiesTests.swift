@@ -58,4 +58,28 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(0x0102030405, Utilities.uInt64FromBytes([0, 1, 2, 3, 4, 5]))
         XCTAssertEqual(0x100, Utilities.uInt64FromBytes([0, 0, 0, 0, 0, 0, 0, 0, 1, 0]))
     }
+
+    func testBits() {
+        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(0)))
+        XCTAssertEqual([.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(1)))
+        XCTAssertEqual([.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(2)))
+    }
+
+    func testBitDescription() {
+        XCTAssertEqual("0", Bit.zero.description)
+        XCTAssertEqual("1", Bit.one.description)
+    }
+
+    func testLazyVar() {
+        struct testStruct {
+            private let _testVar: LazyVar<testStruct, Int> = LazyVar {
+                _ in 42
+            }
+            var testVar: Int {
+                _testVar.lazy(self)
+            }
+        }
+        let ts = testStruct()
+        XCTAssertEqual(42, ts.testVar)
+    }
 }

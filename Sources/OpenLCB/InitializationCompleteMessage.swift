@@ -20,6 +20,6 @@ struct InitializationCompleteMessage: Message {
 
     init(source: NodeId) {
         self.source = source
-        self.mti = CommonMTI.initializationComplete
+        self.mti = CommonMTI.initializationCompleteFullProtocolRequired
     }
 }
