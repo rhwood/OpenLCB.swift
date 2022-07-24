@@ -30,26 +30,15 @@ struct Utilities {
         }
     }
     
-    /// Create a [UInt8] from a 8 byte number.
+    /// Create a [UInt8] from a fixed width number.
     ///
     /// - returns:
-    /// [UInt8] containing 8 elements
+    /// [UInt8] containing the number of bits in the number type / 8 elements
     ///
     /// - parameters:
     ///   - source: a number
-    static public func bytesFromInt(_ source: UInt64) -> [UInt8] {
-        bytesFromInt(source, count: 8)
-    }
-
-    /// Create a [UInt8] from a 2 byte number.
-    ///
-    /// - returns:
-    /// [UInt8] containing 2 elements
-    ///
-    /// - parameters:
-    ///   - source: a number
-    static public func bytesFromInt(_ source: UInt16) -> [UInt8] {
-        bytesFromInt(UInt64(source), count: 2)
+    static public func bytesFromInt<I: FixedWidthInteger>(_ source: I) -> [UInt8] {
+        bytesFromInt(UInt64(source), count: I.bitWidth / 8)
     }
 
     /// Create a [UInt8] from a String containing hexadecimal values by tokenizing the source and converting each token into a UInt8. Non-convertable tokens are silently dropped.
