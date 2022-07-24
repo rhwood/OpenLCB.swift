@@ -67,7 +67,7 @@ class NodeIdTests: XCTestCase {
     func testInt() throws {
         let node = NodeId(value: 0x998877FFEEDD)
         XCTAssertEqual([153, 136, 119, 255, 238, 221], node.bytes)
-        XCTAssertEqual("99.88.77.FF.EE.DD", node.description)
+        XCTAssertEqual("0x99.88.77.FF.EE.DD", node.description)
     }
 
     func testNodeInit() throws {
@@ -99,8 +99,8 @@ class NodeIdTests: XCTestCase {
         XCTAssertNotEqual(node1, node2)
     }
 
-    func testOutputFormat() throws {
-        XCTAssertEqual("01.10.13.0D.D0.AB", try NodeId(bytes: [1, 0x10, 0x13, 0x0D, 0xD0, 0xAB]).description)
+    func testDescription() throws {
+        XCTAssertEqual("0x01.10.13.0D.D0.AB", try NodeId(bytes: [1, 0x10, 0x13, 0x0D, 0xD0, 0xAB]).description)
     }
 
     func testRawValue() throws {

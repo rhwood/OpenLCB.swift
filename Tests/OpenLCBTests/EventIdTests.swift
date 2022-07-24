@@ -58,7 +58,7 @@ class EventIdTests: XCTestCase {
     func testInt() throws {
         let event1 = EventId(value: 0x998877FFEEDD0112)
         XCTAssertEqual([153, 136, 119, 255, 238, 221, 1, 18], event1.bytes)
-        XCTAssertEqual("99.88.77.FF.EE.DD.01.12", event1.description)
+        XCTAssertEqual("0x99.88.77.FF.EE.DD.01.12", event1.description)
     }
 
     func testEqualsSame() throws {
@@ -85,7 +85,7 @@ class EventIdTests: XCTestCase {
     }
 
     func testOutputFormat() throws {
-        XCTAssertEqual("01.10.13.0D.D0.AB.CD.AB",
+        XCTAssertEqual("0x01.10.13.0D.D0.AB.CD.AB",
                        try EventId(bytes: [1, 0x10, 0x13, 0x0D, 0xD0, 0xAB, 0xCD, 0xAB]).description)
     }
 
