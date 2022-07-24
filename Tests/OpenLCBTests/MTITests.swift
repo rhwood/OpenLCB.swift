@@ -96,4 +96,12 @@ class MTITests: XCTestCase {
         XCTAssertEqual(0, MTI(value: 0x0000).modifier)
     }
 
+    func testDescription() {
+        XCTAssertEqual("Initialization Complete", CommonMTI.initializationComplete.rawValue.description)
+        XCTAssertEqual("Traction Control Command", CommonMTI.tractionControlCommand.rawValue.description)
+        XCTAssertEqual("Datagram", CommonMTI.datagram.rawValue.description)
+        XCTAssertEqual("Node Number Allocate", CommonMTI.nodeNumberAllocate.rawValue.description)
+        XCTAssertEqual("Unknown MTI: FF.FF", MTI(value: 0xFFFF).description)
+        XCTAssertEqual("Unknown MTI: 00.00", MTI(value: 0x0000).description)
+    }
 }
