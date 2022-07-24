@@ -22,11 +22,11 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     public let id: UInt64
 
     public var bytes: [UInt8] {
-        Utilities.bytesFromInt(id)
+        Utilities.bytes(id)
     }
 
     public init(node: NodeId, suffix: UInt16) {
-        self.init(value: Utilities.uInt64FromBytes(node.bytes + Utilities.bytesFromInt(suffix)))
+        self.init(value: Utilities.uInt64FromBytes(node.bytes + Utilities.bytes(suffix)))
     }
 
     public init(bytes: [UInt8]) throws {
@@ -39,7 +39,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public init(value: String) throws {
-        try self.init(bytes: Utilities.bytesFromHexString(value))
+        try self.init(bytes: Utilities.bytes(value))
     }
 
     public init?(rawValue: RawValue) {
@@ -59,6 +59,6 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public var description: String {
-        String(format: "%02X.%02X.%02X.%02X.%02X.%02X.%02X.%02X", arguments:bytes)
+        Utilities.byteString(id)
     }
 }

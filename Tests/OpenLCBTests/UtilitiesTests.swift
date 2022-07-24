@@ -26,26 +26,26 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testBytesFromInt() {
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytesFromInt(0x010203040506, count: 6))
-        XCTAssertEqual([0, 0, 0, 0, 0, 0], Utilities.bytesFromInt(0x0, count: 6))
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes(0x010203040506, count: 6))
+        XCTAssertEqual([0, 0, 0, 0, 0, 0], Utilities.bytes(0x0, count: 6))
     }
 
     func testBytesFromIntTooLargeCount() {
-        XCTAssertEqual([0, 1, 2, 3, 4, 5], Utilities.bytesFromInt(0x0102030405, count: 6))
+        XCTAssertEqual([0, 1, 2, 3, 4, 5], Utilities.bytes(0x0102030405, count: 6))
     }
 
     func testBytesFromUInt64() {
-        XCTAssertEqual([0, 0, 0, 1, 2, 3, 4, 5], Utilities.bytesFromInt(UInt64(0x0102030405)))
+        XCTAssertEqual([0, 0, 0, 1, 2, 3, 4, 5], Utilities.bytes(UInt64(0x0102030405)))
     }
 
     func testBytesFromUInt16() {
-        XCTAssertEqual([1, 2], Utilities.bytesFromInt(UInt16(0x0102)))
+        XCTAssertEqual([1, 2], Utilities.bytes(UInt16(0x0102)))
     }
 
     func testBytesFromHexString() {
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytesFromHexString("1.2.3.4.5.6"))
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytesFromHexString("1 2 3 4 5 6"))
-        XCTAssertEqual([], Utilities.bytesFromHexString("There are no hex tokens in this string"))
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes("1.2.3.4.5.6"))
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes("1 2 3 4 5 6"))
+        XCTAssertEqual([], Utilities.bytes("There are no hex tokens in this string"))
     }
 
     func testIntFromBytes() {
@@ -81,5 +81,13 @@ class UtilitiesTests: XCTestCase {
         }
         let ts = testStruct()
         XCTAssertEqual(42, ts.testVar)
+    }
+
+    func testByteString() {
+        XCTAssertEqual("FF.FF", Utilities.byteString(UInt16(0xFFFF)))
+        XCTAssertEqual("00.00", Utilities.byteString(UInt16(0x0000)))
+        XCTAssertEqual("00.00.00.00.00.00.FF.FF", Utilities.byteString(UInt64(0xFFFF)))
+        XCTAssertEqual("00.00.00.00.00.00.00.00", Utilities.byteString(UInt64(0x0000)))
+        XCTAssertEqual("01.02.03.04.05.06", Utilities.byteString([1, 2, 3, 4, 5, 6]))
     }
 }

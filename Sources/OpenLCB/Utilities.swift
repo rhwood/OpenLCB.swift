@@ -24,7 +24,7 @@ struct Utilities {
     /// - parameters:
     ///   - source: a number
     ///   - count: the number of bytes
-    static public func bytesFromInt(_ source: UInt64, count: Int) -> [UInt8] {
+    static public func bytes(_ source: UInt64, count: Int) -> [UInt8] {
         Array(0..<count).reversed().compactMap { index in
             UInt8((source >> (index * 8)) & 0xff)
         }
@@ -37,18 +37,19 @@ struct Utilities {
     ///
     /// - parameters:
     ///   - source: a number
-    static public func bytesFromInt<I: FixedWidthInteger>(_ source: I) -> [UInt8] {
-        bytesFromInt(UInt64(source), count: I.bitWidth / 8)
+    static public func bytes<I: FixedWidthInteger>(_ source: I) -> [UInt8] {
+        bytes(UInt64(source), count: I.bitWidth / 8)
     }
 
-    /// Create a [UInt8] from a String containing hexadecimal values by tokenizing the source and converting each token into a UInt8. Non-convertable tokens are silently dropped.
+    /// Create a [UInt8] from a String containing hexadecimal values by tokenizing the source and
+    /// converting each token into a UInt8. Non-convertable tokens are silently dropped.
     ///
     /// - returns:
     /// [UInt8] which may be empty
     ///
     /// - parameters:
     ///   - source: a String of hex values separated by either spaces or dots
-    static public func bytesFromHexString(_ source: String) -> [UInt8] {
+    static public func bytes(_ source: String) -> [UInt8] {
         source
             .replacingOccurrences(of: ".", with: " ")
             .split(separator: " ")
@@ -87,8 +88,37 @@ struct Utilities {
         }
     }
 
+    /// Create an array of Bits from a fixed width integer.
+    ///
+    /// - returns:
+    /// An array of Bits
+    ///
+    /// - parameters:
+    ///   - bytes: the integer to get bits from
     static public func bits<T: FixedWidthInteger>(_ bytes: T) -> [Bit] {
         bytes.bits
+    }
+
+    /// Create a String of bytes separated by spaces.
+    ///
+    /// - returns:
+    /// A printable string of bytes with consistent formatting
+    ///
+    /// - parameters:
+    ///   - bytes: the array of bytes to print
+    static public func byteString<I: FixedWidthInteger>(_ bytes: I) -> String {
+        byteString(Utilities.bytes(bytes))
+    }
+
+    /// Create a String of bytes separated by spaces.
+    ///
+    /// - returns:
+    /// A printable string of bytes with consistent formatting
+    ///
+    /// - parameters:
+    ///   - bytes: the array of bytes to print
+    static public func byteString(_ bytes: [UInt8]) -> String {
+        bytes.map { String(format: "%02X", $0 ) }.joined(separator: ".")
     }
 }
 
