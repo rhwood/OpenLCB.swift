@@ -16,18 +16,19 @@
 import XCTest
 
 class CommonMTITests: XCTestCase {
-    
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-    
+
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
+
     // when adding new cases, search for the regex 'case (.*): return "(.*)"' and
     // replace it with 'XCTAssertEqual("$2", "\\(CommonMTI$1)")' (be careful to ensure this comment
     // is not changed when running regex)
+    // swiftlint:disable function_body_length
     func testDescription() throws {
         XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationComplete)")
         XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationCompleteSimpleSetSufficient)")
@@ -76,5 +77,5 @@ class CommonMTITests: XCTestCase {
         XCTAssertEqual("Node Number Allocate", "\(CommonMTI.nodeNumberAllocate)")
         XCTAssertEqual("No Filtering", "\(CommonMTI.noFiltering)")
     }
-    
+
 }
