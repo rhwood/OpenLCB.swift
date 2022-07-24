@@ -71,16 +71,16 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testLazyVar() {
-        struct testStruct {
-            private let _testVar: LazyVar<testStruct, Int> = LazyVar {
-                _ in 42
+        struct TestStruct {
+            private let _testVar: LazyVar<TestStruct, Int> = LazyVar { _ in
+                42
             }
             var testVar: Int {
                 _testVar.lazy(self)
             }
         }
-        let ts = testStruct()
-        XCTAssertEqual(42, ts.testVar)
+        let ts1 = TestStruct()
+        XCTAssertEqual(42, ts1.testVar)
     }
 
     func testByteString() {

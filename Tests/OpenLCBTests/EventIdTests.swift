@@ -34,7 +34,7 @@ class EventIdTests: XCTestCase {
     }
 
     func testOkBytes() {
-        XCTAssertEqual([1,2,3,4,5,6,7,8], try EventId(bytes: [1,2,3,4,5,6,7,8]).bytes)
+        XCTAssertEqual([1, 2, 3, 4, 5, 6, 7, 8], try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8]).bytes)
     }
 
     func testEmptyStringValue() {
@@ -50,48 +50,49 @@ class EventIdTests: XCTestCase {
     }
 
     func testOkStringValue() throws {
-        let e1 = try EventId(value: "1 2 3 4 5 6 7 8")
-        let e2 = try EventId(value: "1.2.3.4.5.6.7.8")
-        XCTAssertEqual(e1, e2)
+        let event1 = try EventId(value: "1 2 3 4 5 6 7 8")
+        let event2 = try EventId(value: "1.2.3.4.5.6.7.8")
+        XCTAssertEqual(event1, event2)
     }
 
     func testInt() throws {
-        let e = EventId(value: 0x998877FFEEDD0112)
-        XCTAssertEqual([153, 136, 119, 255, 238, 221, 1, 18], e.bytes)
-        XCTAssertEqual("99.88.77.FF.EE.DD.01.12", e.description)
+        let event1 = EventId(value: 0x998877FFEEDD0112)
+        XCTAssertEqual([153, 136, 119, 255, 238, 221, 1, 18], event1.bytes)
+        XCTAssertEqual("99.88.77.FF.EE.DD.01.12", event1.description)
     }
 
     func testEqualsSame() throws {
-        let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        let e2 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        XCTAssertEqual(e1, e2)
+        let event1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        let event2 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssertEqual(event1, event2)
     }
 
     func testEqualsSameString() throws {
-        let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        let e2 = try EventId(value: "1.2.3.4.5.6.7.8")
-        XCTAssertEqual(e1, e2)
+        let event1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        let event2 = try EventId(value: "1.2.3.4.5.6.7.8")
+        XCTAssertEqual(event1, event2)
     }
 
     func testEqualsSelf() throws {
-        let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        XCTAssertEqual(e1, e1)
+        let event1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssertEqual(event1, event1)
     }
 
     func testNotEquals() throws {
-        let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        let e2 = try EventId(bytes: [8, 7, 6, 5, 4, 3, 2, 1])
-        XCTAssertNotEqual(e1, e2)
+        let event1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        let event2 = try EventId(bytes: [8, 7, 6, 5, 4, 3, 2, 1])
+        XCTAssertNotEqual(event1, event2)
     }
 
     func testOutputFormat() throws {
-        XCTAssertEqual("01.10.13.0D.D0.AB.CD.AB", try EventId(bytes: [1,0x10,0x13,0x0D,0xD0,0xAB,0xCD,0xAB]).description)
+        XCTAssertEqual("01.10.13.0D.D0.AB.CD.AB",
+                       try EventId(bytes: [1, 0x10, 0x13, 0x0D, 0xD0, 0xAB, 0xCD, 0xAB]).description)
     }
 
     func testRawValue() throws {
-        let e = EventId(rawValue: 0x0102030405060708)
-        XCTAssertNotNil(e)
-        XCTAssertEqual(0x0102030405060708, e?.rawValue)
+        let event1 = EventId(rawValue: 0x0102030405060708)
+        XCTAssertNotNil(event1)
+        XCTAssertEqual(0x0102030405060708, event1?.rawValue)
     }
 
     func testNodeSuffixInit() throws {
@@ -99,8 +100,8 @@ class EventIdTests: XCTestCase {
     }
 
     func testNodeIdSuffixProperties() throws {
-        let e = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], e.nodeID.bytes)
-        XCTAssertEqual(0x708, e.suffix)
+        let event1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], event1.nodeID.bytes)
+        XCTAssertEqual(0x708, event1.suffix)
     }
 }
