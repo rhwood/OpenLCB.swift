@@ -26,13 +26,13 @@ class EventIdTests: XCTestCase {
     }
 
     func testTooLongBytes() throws {
-        XCTAssertThrowsError(try EventId(bytes: [1,2,3,4,5,6,7,8,9]))
+        XCTAssertThrowsError(try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8, 9]))
     }
-    
+
     func testTooShortBytes() {
-        XCTAssertThrowsError(try EventId(bytes: [1,2,3,4,5]))
+        XCTAssertThrowsError(try EventId(bytes: [1, 2, 3, 4, 5]))
     }
-    
+
     func testOkBytes() {
         XCTAssertEqual([1,2,3,4,5,6,7,8], try EventId(bytes: [1,2,3,4,5,6,7,8]).bytes)
     }
@@ -40,11 +40,11 @@ class EventIdTests: XCTestCase {
     func testEmptyStringValue() {
         XCTAssertThrowsError(try EventId(value: ""))
     }
-    
+
     func testTooLongStringValue() throws {
         XCTAssertThrowsError(try EventId(value: "1.2.3.4.5.6.7.8.9"))
     }
-    
+
     func testTooShortStringValue() throws {
         XCTAssertThrowsError(try EventId(value: "1 2 3 4 5"))
     }
@@ -60,30 +60,30 @@ class EventIdTests: XCTestCase {
         XCTAssertEqual([153, 136, 119, 255, 238, 221, 1, 18], e.bytes)
         XCTAssertEqual("99.88.77.FF.EE.DD.01.12", e.description)
     }
-    
+
     func testEqualsSame() throws {
         let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
         let e2 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
         XCTAssertEqual(e1, e2)
     }
-    
+
     func testEqualsSameString() throws {
         let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
         let e2 = try EventId(value: "1.2.3.4.5.6.7.8")
         XCTAssertEqual(e1, e2)
     }
-    
+
     func testEqualsSelf() throws {
         let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
         XCTAssertEqual(e1, e1)
     }
-    
+
     func testNotEquals() throws {
         let e1 = try EventId(bytes: [1, 2, 3, 4, 5, 6, 7, 8])
         let e2 = try EventId(bytes: [8, 7, 6, 5, 4, 3, 2, 1])
         XCTAssertNotEqual(e1, e2)
     }
-    
+
     func testOutputFormat() throws {
         XCTAssertEqual("01.10.13.0D.D0.AB.CD.AB", try EventId(bytes: [1,0x10,0x13,0x0D,0xD0,0xAB,0xCD,0xAB]).description)
     }

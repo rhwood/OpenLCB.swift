@@ -15,7 +15,7 @@
 import Foundation
 
 struct Utilities {
-    
+
     /// Create a [UInt8] from a number. This does not protect against count being incorrect.
     ///
     /// - returns:
@@ -29,7 +29,7 @@ struct Utilities {
             UInt8((source >> (index * 8)) & 0xff)
         }
     }
-    
+
     /// Create a [UInt8] from a fixed width number.
     ///
     /// - returns:
@@ -139,14 +139,14 @@ public enum Bit: UInt8, CustomStringConvertible {
 /// Lazily compute, but not recompute, a var in a struct
 // source: https://stackoverflow.com/a/51734402
 class LazyVar<Object, Property> {
-    let block:(Object)->Property
-    private var cache:Property? = nil
+    let block: (Object) -> Property
+    private var cache: Property?
 
-    init(_ block:@escaping (Object)->Property) {
+    init(_ block: @escaping (Object) -> Property) {
         self.block = block
     }
 
-    func lazy(_ input:Object) -> Property {
+    func lazy(_ input: Object) -> Property {
         if self.cache == nil {
             self.cache = self.block(input)
         }
@@ -161,10 +161,10 @@ extension FixedWidthInteger {
         // Fill an array of bits with zeros to the fixed width integer length
         var bits = [Bit](repeating: .zero, count: self.bitWidth)
         // Run through each bit (LSB first)
-        for i in 0..<self.bitWidth {
+        for index in 0..<self.bitWidth {
             let currentBit = bytes & 0x01
             if currentBit != 0 {
-                bits[i] = .one
+                bits[index] = .one
             }
             bytes >>= 1
         }

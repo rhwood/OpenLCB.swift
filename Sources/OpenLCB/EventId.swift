@@ -14,7 +14,7 @@
 
 public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConvertible {
     public typealias RawValue = UInt64
-    
+
     public enum EventIDError: Error {
         case insufficientBytes
     }
@@ -33,7 +33,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
         guard bytes.count == 8 else { throw EventIDError.insufficientBytes }
         self.init(value: Utilities.uInt64FromBytes(bytes))
     }
-    
+
     public init(value: UInt64) {
         self.id = value
     }
@@ -47,6 +47,9 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public var nodeID: NodeId {
+        // Force try to avoid caller needing to use in try...catch block
+        // since this call is known to succeed
+        // swiftlint:disable force_try
         try! NodeId(bytes: Array(self.bytes[..<6]))
     }
 

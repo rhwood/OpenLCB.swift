@@ -16,8 +16,8 @@ public struct MTI: RawRepresentable, Equatable {
     public typealias RawValue = UInt16
 
     public let rawValue: UInt16
-    private let _bits: LazyVar<MTI, [Bit]> = LazyVar {
-        mti in Utilities.bits(mti.rawValue)
+    private let _bits: LazyVar<MTI, [Bit]> = LazyVar { mti in
+        Utilities.bits(mti.rawValue)
     }
     var bits: [Bit] {
         _bits.lazy(self)

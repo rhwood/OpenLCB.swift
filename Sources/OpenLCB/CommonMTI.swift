@@ -17,6 +17,8 @@ public enum CommonMTI: MTI, RawRepresentable, CustomStringConvertible {
     // Defined in OpenLCB Message Network Standard
     // Basic
     case initializationComplete = 0x0100
+    // swiftlint thinks next name is too long
+    // swiftlint:disable identifier_name
     case initializationCompleteSimpleSetSufficient = 0x0101
     case verifyNodeIDNumberAddressed = 0x0488
     case verifyNodeIDNumberGlobal = 0x0490
