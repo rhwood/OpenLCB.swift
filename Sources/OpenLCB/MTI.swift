@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-public struct MTI: RawRepresentable, Equatable {
+public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
     public typealias RawValue = UInt16
 
     public let rawValue: UInt16
-    private let _bits: LazyVar<MTI, [Bit]> = LazyVar {
-        mti in Utilities.bits(mti.rawValue)
+    private let _bits: LazyVar<MTI, [Bit]> = LazyVar { mti in
+        Utilities.bits(mti.rawValue)
     }
     var bits: [Bit] {
         _bits.lazy(self)
@@ -61,6 +61,13 @@ public struct MTI: RawRepresentable, Equatable {
 
     public var modifier: UInt8 {
         twoBits(left: 1, right: 0)
+    }
+
+    public var description: String {
+        if let cmti = CommonMTI(rawValue: self) {
+            return cmti.description
+        }
+        return "Unknown MTI: \(Utilities.byteString(rawValue))"
     }
 
     private func twoBits(left: Int, right: Int) -> UInt8 {
