@@ -104,10 +104,14 @@ struct Utilities {
     /// - returns:
     /// A printable string of bytes with consistent formatting
     ///
+    /// OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
+    /// separate bytes in a single value.
+    ///
     /// - parameters:
     ///   - bytes: the array of bytes to print
-    static public func byteString<I: FixedWidthInteger>(_ bytes: I) -> String {
-        byteString(Utilities.bytes(bytes))
+    ///   - separator: the characters to separate the bytes; defaults to a single period if not specified
+    static public func byteString<I: FixedWidthInteger>(_ bytes: I, separator: String = ".") -> String {
+        byteString(Utilities.bytes(bytes), separator: separator)
     }
 
     /// Create a String of bytes separated by spaces.
@@ -115,10 +119,14 @@ struct Utilities {
     /// - returns:
     /// A printable string of bytes with consistent formatting
     ///
+    /// OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
+    /// separate bytes in a single value.
+    ///
     /// - parameters:
     ///   - bytes: the array of bytes to print
-    static public func byteString(_ bytes: [UInt8]) -> String {
-        bytes.map { String(format: "%02X", $0 ) }.joined(separator: ".")
+    ///   - separator: the characters to separate the bytes; defaults to a single period if not specified
+    static public func byteString(_ bytes: [UInt8], separator: String = ".") -> String {
+        "0x" + bytes.map { String(format: "%02X", $0 ) }.joined(separator: separator)
     }
 }
 

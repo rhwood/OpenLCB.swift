@@ -101,7 +101,7 @@ class MTITests: XCTestCase {
         XCTAssertEqual("Traction Control Command", CommonMTI.tractionControlCommand.rawValue.description)
         XCTAssertEqual("Datagram", CommonMTI.datagram.rawValue.description)
         XCTAssertEqual("Node Number Allocate", CommonMTI.nodeNumberAllocate.rawValue.description)
-        XCTAssertEqual("Unknown MTI: FF.FF", MTI(value: 0xFFFF).description)
-        XCTAssertEqual("Unknown MTI: 00.00", MTI(value: 0x0000).description)
+        XCTAssertEqual("Unknown MTI: 0xFF.FF", MTI(value: 0xFFFF).description)
+        XCTAssertEqual("Unknown MTI: 0x00.00", MTI(value: 0x0000).description)
     }
 }

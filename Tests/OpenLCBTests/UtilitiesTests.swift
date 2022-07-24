@@ -84,10 +84,15 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testByteString() {
-        XCTAssertEqual("FF.FF", Utilities.byteString(UInt16(0xFFFF)))
-        XCTAssertEqual("00.00", Utilities.byteString(UInt16(0x0000)))
-        XCTAssertEqual("00.00.00.00.00.00.FF.FF", Utilities.byteString(UInt64(0xFFFF)))
-        XCTAssertEqual("00.00.00.00.00.00.00.00", Utilities.byteString(UInt64(0x0000)))
-        XCTAssertEqual("01.02.03.04.05.06", Utilities.byteString([1, 2, 3, 4, 5, 6]))
+        XCTAssertEqual("0xFF.FF", Utilities.byteString(UInt16(0xFFFF)))
+        XCTAssertEqual("0x00.00", Utilities.byteString(UInt16(0x0000)))
+        XCTAssertEqual("0x00.00.00.00.00.00.FF.FF", Utilities.byteString(UInt64(0xFFFF)))
+        XCTAssertEqual("0x00.00.00.00.00.00.00.00", Utilities.byteString(UInt64(0x0000)))
+        XCTAssertEqual("0x01.02.03.04.05.06", Utilities.byteString([1, 2, 3, 4, 5, 6]))
+        XCTAssertEqual("0xFF FF", Utilities.byteString(UInt16(0xFFFF), separator: " "))
+        XCTAssertEqual("0x00 00", Utilities.byteString(UInt16(0x0000), separator: " "))
+        XCTAssertEqual("0x00 00 00 00 00 00 FF FF", Utilities.byteString(UInt64(0xFFFF), separator: " "))
+        XCTAssertEqual("0x00 00 00 00 00 00 00 00", Utilities.byteString(UInt64(0x0000), separator: " "))
+        XCTAssertEqual("0x01 02 03 04 05 06", Utilities.byteString([1, 2, 3, 4, 5, 6], separator: " "))
     }
 }
