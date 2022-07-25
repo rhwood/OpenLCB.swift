@@ -70,6 +70,54 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual("1", Bit.one.description)
     }
 
+    func testNibble() {
+        XCTAssertEqual(0, [.zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(1, [.one, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(2, [.zero, .one, .zero, .zero].nibble(0))
+        XCTAssertEqual(4, [.zero, .zero, .one, .zero].nibble(0))
+        XCTAssertEqual(8, [.zero, .zero, .zero, .one].nibble(0))
+        XCTAssertEqual(15, [.one, .one, .one, .one].nibble(0))
+        XCTAssertEqual(0, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(1, [.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(2, [.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(4, [.zero, .zero, .one, .zero, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(8, [.zero, .zero, .zero, .one, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(15, [.one, .one, .one, .one, .zero, .zero, .zero, .zero].nibble(0))
+        XCTAssertEqual(0, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].nibble(4))
+        XCTAssertEqual(1, [.zero, .zero, .zero, .zero, .one, .zero, .zero, .zero].nibble(4))
+        XCTAssertEqual(2, [.zero, .zero, .zero, .zero, .zero, .one, .zero, .zero].nibble(4))
+        XCTAssertEqual(4, [.zero, .zero, .zero, .zero, .zero, .zero, .one, .zero].nibble(4))
+        XCTAssertEqual(8, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .one].nibble(4))
+        XCTAssertEqual(15, [.zero, .zero, .zero, .zero, .one, .one, .one, .one].nibble(4))
+        XCTAssertEqual(0, Utilities.bits(0).nibble(0))
+        XCTAssertEqual(1, Utilities.bits(1).nibble(0))
+        XCTAssertEqual(2, Utilities.bits(2).nibble(0))
+        XCTAssertEqual(4, Utilities.bits(4).nibble(0))
+        XCTAssertEqual(8, Utilities.bits(8).nibble(0))
+        XCTAssertEqual(15, Utilities.bits(15).nibble(0))
+    }
+
+    func testByte() {
+        XCTAssertEqual(0, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].byte(0))
+        XCTAssertEqual(1, [.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero].byte(0))
+        XCTAssertEqual(2, [.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero].byte(0))
+        XCTAssertEqual(64, [.zero, .zero, .zero, .zero, .zero, .zero, .one, .zero].byte(0))
+        XCTAssertEqual(128, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .one].byte(0))
+        XCTAssertEqual(255, [.one, .one, .one, .one, .one, .one, .one, .one].byte(0))
+        XCTAssertEqual(0, Utilities.bits(UInt8(0)).byte(0))
+        XCTAssertEqual(1, Utilities.bits(UInt8(1)).byte(0))
+        XCTAssertEqual(2, Utilities.bits(UInt8(2)).byte(0))
+        XCTAssertEqual(64, Utilities.bits(UInt8(64)).byte(0))
+        XCTAssertEqual(128, Utilities.bits(UInt8(128)).byte(0))
+        XCTAssertEqual(255, Utilities.bits(UInt8(255)).byte(0))
+        XCTAssertEqual(0, Utilities.bits(UInt64(0)).byte(0))
+        XCTAssertEqual(1, Utilities.bits(UInt64(1)).byte(0))
+        XCTAssertEqual(2, Utilities.bits(UInt64(2)).byte(0))
+        XCTAssertEqual(64, Utilities.bits(UInt64(64)).byte(0))
+        XCTAssertEqual(128, Utilities.bits(UInt64(128)).byte(0))
+        XCTAssertEqual(255, Utilities.bits(UInt64(255)).byte(0))
+    }
+
     func testLazyVar() {
         struct TestStruct {
             private let _testVar: LazyVar<TestStruct, Int> = LazyVar { _ in

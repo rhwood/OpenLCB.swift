@@ -88,7 +88,7 @@ struct Utilities {
         }
     }
 
-    /// Create an array of Bits from a fixed width integer.
+    /// Create an array of Bits from a fixed width integer. The least significant bit is at index 0.
     ///
     /// - returns:
     /// An array of Bits
@@ -132,16 +132,52 @@ struct Utilities {
 
 // source: https://stackoverflow.com/a/51770616
 public enum Bit: UInt8, CustomStringConvertible {
-    case zero, one
+    case zero = 0
+    case one = 1
 
     public var description: String {
-        switch self {
-        case .one:
-            return "1"
-        case .zero:
-            return "0"
-        }
+        self == .one ? "1" : "0"
     }
+}
+
+extension Array where Element == Bit {
+
+    /// Get a nibble from an arbitrary position in a [Bit]
+    ///
+    /// - returns:
+    /// A UInt8 representing the nibble
+    ///
+    /// - parameters:
+    ///   - index: The index of the first bit in the nibble
+    public func nibble(_ index: Int) -> UInt8 {
+        integer(start: index, end: index + 3)
+    }
+
+    /// Get a byte from an arbitrary position in a [Bit]
+    ///
+    /// - returns:
+    /// A UInt8 representing the byte
+    ///
+    /// - parameters:
+    ///   - index: The index of the first bit in the byte
+    public func byte(_ index: Int) -> UInt8 {
+        integer(start: index, end: index + 7)
+    }
+
+    /// Get a number for the bits between two indexes in a [Bit]
+    ///
+    /// - returns:
+    /// An integer representing the bits
+    ///
+    /// - parameters:
+    ///   - start: The index of the first bit in the number
+    ///   - end: The index of the last bit in the number
+    public func integer<I: FixedWidthInteger>(start: Int, end: Int) -> I {
+        return I(self[start...end].reversed().reduce(0, { accumulated, current in
+            accumulated << 1 | current.rawValue
+        }))
+    }
+
 }
 
 /// Lazily compute, but not recompute, a var in a struct
@@ -170,8 +206,7 @@ extension FixedWidthInteger {
         var bits = [Bit](repeating: .zero, count: self.bitWidth)
         // Run through each bit (LSB first)
         for index in 0..<self.bitWidth {
-            let currentBit = bytes & 0x01
-            if currentBit != 0 {
+            if (bytes & 0x01) != 0 {
                 bits[index] = .one
             }
             bytes >>= 1

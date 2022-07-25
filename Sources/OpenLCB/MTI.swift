@@ -40,11 +40,11 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
     }
 
     public var priority: UInt8 {
-        twoBits(left: 11, right: 10)
+        bits.integer(start: 10, end: 11)
     }
 
     public var type: UInt8 {
-        (bits[9].rawValue * 16) + (twoBits(left: 8, right: 7) * 4) + twoBits(left: 6, right: 5)
+        bits.integer(start: 5, end: 9)
     }
 
     public var simpleProtocol: Bool {
@@ -60,7 +60,7 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
     }
 
     public var modifier: UInt8 {
-        twoBits(left: 1, right: 0)
+        bits.integer(start: 0, end: 1)
     }
 
     public var description: String {
@@ -68,10 +68,6 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
             return cmti.description
         }
         return "Unknown MTI: \(Utilities.byteString(rawValue))"
-    }
-
-    private func twoBits(left: Int, right: Int) -> UInt8 {
-        (bits[left].rawValue * 2) + bits[right].rawValue
     }
 }
 
