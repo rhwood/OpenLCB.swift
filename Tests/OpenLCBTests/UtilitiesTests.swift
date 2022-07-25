@@ -118,6 +118,38 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(255, Utilities.bits(UInt64(255)).byte(0))
     }
 
+    func test3Nibbles() {
+        XCTAssertEqual(0, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(1, [.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(2, [.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(64, [.zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(128, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(255, [.one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(256, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero].integer(start: 0, end: 11))
+        XCTAssertEqual(4095, [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one].integer(start: 0, end: 11))
+        XCTAssertEqual(0, Utilities.bits(UInt16(0)).integer(start: 0, end: 11))
+        XCTAssertEqual(1, Utilities.bits(UInt16(1)).integer(start: 0, end: 11))
+        XCTAssertEqual(2, Utilities.bits(UInt16(2)).integer(start: 0, end: 11))
+        XCTAssertEqual(64, Utilities.bits(UInt16(64)).integer(start: 0, end: 11))
+        XCTAssertEqual(128, Utilities.bits(UInt16(128)).integer(start: 0, end: 11))
+        XCTAssertEqual(255, Utilities.bits(UInt16(255)).integer(start: 0, end: 11))
+        XCTAssertEqual(4095, Utilities.bits(UInt16(4095)).integer(start: 0, end: 11))
+        XCTAssertEqual(255, Utilities.bits(UInt16(4080)).integer(start: 4, end: 15))
+        XCTAssertEqual(0, Utilities.bits(UInt64(0)).integer(start: 0, end: 11))
+        XCTAssertEqual(1, Utilities.bits(UInt64(1)).integer(start: 0, end: 11))
+        XCTAssertEqual(2, Utilities.bits(UInt64(2)).integer(start: 0, end: 11))
+        XCTAssertEqual(64, Utilities.bits(UInt64(64)).integer(start: 0, end: 11))
+        XCTAssertEqual(128, Utilities.bits(UInt64(128)).integer(start: 0, end: 11))
+        XCTAssertEqual(255, Utilities.bits(UInt64(255)).integer(start: 0, end: 11))
+        XCTAssertEqual(255, Utilities.bits(UInt64(4080)).integer(start: 4, end: 15))
+    }
+
+    func testCanHeader() {
+        let bit: [Bit] = [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero, .one, .one]
+        XCTAssertEqual(4095, bit.integer(start: 0, end: 11))
+        XCTAssertEqual(2080, bit.integer(start: 12, end: 23))
+    }
+
     func testLazyVar() {
         struct TestStruct {
             private let _testVar: LazyVar<TestStruct, Int> = LazyVar { _ in

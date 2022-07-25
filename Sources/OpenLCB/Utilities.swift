@@ -173,9 +173,9 @@ extension Array where Element == Bit {
     ///   - start: The index of the first bit in the number
     ///   - end: The index of the last bit in the number
     public func integer<I: FixedWidthInteger>(start: Int, end: Int) -> I {
-        return I(self[start...end].reversed().reduce(0, { accumulated, current in
-            accumulated << 1 | current.rawValue
-        }))
+        return self[start...end].reversed().reduce(0, { accumulated, current in
+            accumulated << 1 | I(current.rawValue)
+        })
     }
 
 }
