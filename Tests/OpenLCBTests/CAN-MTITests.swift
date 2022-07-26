@@ -60,4 +60,11 @@ class CAN_MTITests: XCTestCase {
         XCTAssertNil(MTI.fromCanFrame(frame))
     }
 
+    func testInvalidMessageMTI() throws {
+        // type == 0
+        let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .one]), data: [])
+        XCTAssertTrue(frame.isOpenLCBMessage)
+        XCTAssertEqual(0, frame.type)
+        XCTAssertNil(MTI.fromCanFrame(frame))
+    }
 }
