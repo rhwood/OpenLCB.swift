@@ -26,26 +26,26 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testBytesFromInt() {
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes(0x010203040506, count: 6))
-        XCTAssertEqual([0, 0, 0, 0, 0, 0], Utilities.bytes(0x0, count: 6))
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], 0x010203040506.bytes(count: 6))
+        XCTAssertEqual([0, 0, 0, 0, 0, 0], 0x0.bytes(count: 6))
     }
 
     func testBytesFromIntTooLargeCount() {
-        XCTAssertEqual([0, 1, 2, 3, 4, 5], Utilities.bytes(0x0102030405, count: 6))
+        XCTAssertEqual([0, 1, 2, 3, 4, 5], 0x0102030405.bytes(count: 6))
     }
 
     func testBytesFromUInt64() {
-        XCTAssertEqual([0, 0, 0, 1, 2, 3, 4, 5], Utilities.bytes(UInt64(0x0102030405)))
+        XCTAssertEqual([0, 0, 0, 1, 2, 3, 4, 5], UInt64(0x0102030405).bytes())
     }
 
     func testBytesFromUInt16() {
-        XCTAssertEqual([1, 2], Utilities.bytes(UInt16(0x0102)))
+        XCTAssertEqual([1, 2], UInt16(0x0102).bytes())
     }
 
     func testBytesFromHexString() {
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes("1.2.3.4.5.6"))
-        XCTAssertEqual([1, 2, 3, 4, 5, 6], Utilities.bytes("1 2 3 4 5 6"))
-        XCTAssertEqual([], Utilities.bytes("There are no hex tokens in this string"))
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], ("1.2.3.4.5.6").bytes)
+        XCTAssertEqual([1, 2, 3, 4, 5, 6], ("1 2 3 4 5 6").bytes)
+        XCTAssertEqual([], ("There are no hex tokens in this string").bytes)
     }
 
     func testIntFromBytes() {
@@ -167,15 +167,15 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testByteString() {
-        XCTAssertEqual("0xFF.FF", Utilities.byteString(UInt16(0xFFFF)))
-        XCTAssertEqual("0x00.00", Utilities.byteString(UInt16(0x0000)))
-        XCTAssertEqual("0x00.00.00.00.00.00.FF.FF", Utilities.byteString(UInt64(0xFFFF)))
-        XCTAssertEqual("0x00.00.00.00.00.00.00.00", Utilities.byteString(UInt64(0x0000)))
-        XCTAssertEqual("0x01.02.03.04.05.06", Utilities.byteString([1, 2, 3, 4, 5, 6]))
-        XCTAssertEqual("0xFF FF", Utilities.byteString(UInt16(0xFFFF), separator: " "))
-        XCTAssertEqual("0x00 00", Utilities.byteString(UInt16(0x0000), separator: " "))
-        XCTAssertEqual("0x00 00 00 00 00 00 FF FF", Utilities.byteString(UInt64(0xFFFF), separator: " "))
-        XCTAssertEqual("0x00 00 00 00 00 00 00 00", Utilities.byteString(UInt64(0x0000), separator: " "))
-        XCTAssertEqual("0x01 02 03 04 05 06", Utilities.byteString([1, 2, 3, 4, 5, 6], separator: " "))
+        XCTAssertEqual("0xFF.FF", UInt16(0xFFFF).byteString())
+        XCTAssertEqual("0x00.00", UInt16(0x0000).byteString())
+        XCTAssertEqual("0x00.00.00.00.00.00.FF.FF", UInt64(0xFFFF).byteString())
+        XCTAssertEqual("0x00.00.00.00.00.00.00.00", UInt64(0x0000).byteString())
+        XCTAssertEqual("0x01.02.03.04.05.06", [1, 2, 3, 4, 5, 6].byteString())
+        XCTAssertEqual("0xFF FF", UInt16(0xFFFF).byteString(separator: " "))
+        XCTAssertEqual("0x00 00", UInt16(0x0000).byteString(separator: " "))
+        XCTAssertEqual("0x00 00 00 00 00 00 FF FF", UInt64(0xFFFF).byteString(separator: " "))
+        XCTAssertEqual("0x00 00 00 00 00 00 00 00", UInt64(0x0000).byteString(separator: " "))
+        XCTAssertEqual("0x01 02 03 04 05 06", [1, 2, 3, 4, 5, 6].byteString(separator: " "))
     }
 }

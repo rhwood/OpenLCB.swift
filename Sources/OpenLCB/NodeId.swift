@@ -22,7 +22,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     public let id: UInt64
 
     public var bytes: [UInt8] {
-        Utilities.bytes(id).suffix(6)
+        id.bytes().suffix(6)
     }
 
     public init(node: NodeId) {
@@ -44,7 +44,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     }
 
     public init(value: String) throws {
-        try self.init(bytes: Utilities.bytes(value))
+        try self.init(bytes: value.bytes)
     }
 
     public init?(rawValue: RawValue) {
@@ -56,6 +56,6 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     }
 
     public var description: String {
-        Utilities.byteString(bytes)
+        bytes.byteString()
     }
 }

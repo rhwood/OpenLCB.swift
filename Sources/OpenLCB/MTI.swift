@@ -67,7 +67,7 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
         if let cmti = CommonMTI(rawValue: self) {
             return cmti.description
         }
-        return "Unknown MTI: \(Utilities.byteString(rawValue))"
+        return "Unknown MTI: \(rawValue.byteString())"
     }
 }
 

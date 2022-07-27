@@ -14,81 +14,6 @@
 
 import Foundation
 
-struct Utilities {
-
-    /// Create a [UInt8] from a number. This does not protect against count being incorrect.
-    ///
-    /// - returns:
-    /// [UInt8] containing count elements
-    ///
-    /// - parameters:
-    ///   - source: a number
-    ///   - count: the number of bytes
-    static public func bytes(_ source: UInt64, count: Int) -> [UInt8] {
-        Array(0..<count).reversed().compactMap { index in
-            UInt8((source >> (index * 8)) & 0xff)
-        }
-    }
-
-    /// Create a [UInt8] from a fixed width number.
-    ///
-    /// - returns:
-    /// [UInt8] containing the number of bits in the number type / 8 elements
-    ///
-    /// - parameters:
-    ///   - source: a number
-    static public func bytes<I: FixedWidthInteger>(_ source: I) -> [UInt8] {
-        bytes(UInt64(source), count: I.bitWidth / 8)
-    }
-
-    /// Create a [UInt8] from a String containing hexadecimal values by tokenizing the source and
-    /// converting each token into a UInt8. Non-convertable tokens are silently dropped.
-    ///
-    /// - returns:
-    /// [UInt8] which may be empty
-    ///
-    /// - parameters:
-    ///   - source: a String of hex values separated by either spaces or dots
-    static public func bytes(_ source: String) -> [UInt8] {
-        source
-            .replacingOccurrences(of: ".", with: " ")
-            .split(separator: " ")
-            .compactMap { number in
-                UInt8(number)
-            }
-    }
-
-    /// Create a String of bytes separated by spaces.
-    ///
-    /// - returns:
-    /// A printable string of bytes with consistent formatting
-    ///
-    /// OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
-    /// separate bytes in a single value.
-    ///
-    /// - parameters:
-    ///   - bytes: the array of bytes to print
-    ///   - separator: the characters to separate the bytes; defaults to a single period if not specified
-    static public func byteString<I: FixedWidthInteger>(_ bytes: I, separator: String = ".") -> String {
-        byteString(Utilities.bytes(bytes), separator: separator)
-    }
-
-    /// Create a String of bytes separated by spaces.
-    ///
-    /// - returns:
-    /// A printable string of bytes with consistent formatting
-    ///
-    /// OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
-    /// separate bytes in a single value.
-    ///
-    /// - parameters:
-    ///   - bytes: the array of bytes to print
-    ///   - separator: the characters to separate the bytes; defaults to a single period if not specified
-    static public func byteString(_ bytes: [UInt8], separator: String = ".") -> String {
-        "0x" + bytes.map { String(format: "%02X", $0 ) }.joined(separator: separator)
-    }
-}
-
 // source: https://stackoverflow.com/a/51770616
 public enum Bit: UInt8, CustomStringConvertible {
     case zero = 0
@@ -136,6 +61,24 @@ extension Array where Element == Bit {
             accumulated << 1 | I(current.rawValue)
         })
     }
+}
+
+extension Array where Element == UInt8 {
+
+    /**
+     Create a String of bytes separated by spaces.
+
+     OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
+     separate bytes in a single value.
+
+     - parameters:
+     - separator: the characters to separate the bytes; defaults to a single period if not specified
+     - returns:
+     A printable string of bytes with consistent formatting
+     */
+    public func byteString(separator: String = ".") -> String {
+        "0x" + self.map { String(format: "%02X", $0 ) }.joined(separator: separator)
+    }
 
 }
 
@@ -176,16 +119,66 @@ extension FixedWidthInteger {
 }
 
 extension FixedWidthInteger {
-    /// Creates an number from a [UInt8].
-    ///
-    /// - returns:
-    /// A number
-    ///
-    /// - parameters:
-    ///   - source: an array of UInt8; uses last N elements if source.count > bitwidth of result where N == bitwidth of result
-    static public func fromBytes<I: FixedWidthInteger>(_ source: [UInt8]) -> I {
-        source.reduce(0) { value, byte in
+    /**
+     Creates an number from an array of bytes.
+
+     - note: Uses last N elements of source where N is the bitwidth of the result
+
+     - parameters:
+     - bytes: byte array
+     - returns: an integer
+     */
+    static public func fromBytes<I: FixedWidthInteger>(_ bytes: [UInt8]) -> I {
+        bytes.reduce(0) { value, byte in
             (value << 8) | I(byte)
         }
     }
+
+    /**
+     Create a [UInt8] from a number. This does not protect against count being incorrect.
+
+     - parameters:
+     - count: the number of bytes; defaults to bitWidth of number
+     - returns: [UInt8] containing count elements
+     */
+    public func bytes(count: Int = 0) -> [UInt8] {
+        let source = self
+        let count = count == 0 ? type(of: self).bitWidth / 8 : count
+        return Array(0..<count).reversed().compactMap { index in
+            UInt8((source >> (index * 8)) & 0xff)
+        }
+    }
+
+    /**
+     Create a String of bytes separated by spaces.
+
+     OpenLCB conventions use a space (" ") to separate bytes in a stream, and periods (".") to
+     separate bytes in a single value.
+     - parameters:
+     - separator: the characters to separate the bytes; defaults to a single period if not specified
+     - returns:
+     A printable string of bytes with consistent formatting
+     */
+    public func byteString(separator: String = ".") -> String {
+        self.bytes().byteString(separator: separator)
+    }
+}
+
+extension String {
+
+    /**
+     Create a [UInt8] from a String containing hexadecimal values by tokenizing the source and
+     converting each token into a UInt8. Non-convertable tokens are silently dropped.
+
+     - returns: [UInt8] which may be empty
+     */
+    public var bytes: [UInt8] {
+        self
+            .replacingOccurrences(of: ".", with: " ")
+            .split(separator: " ")
+            .compactMap { number in
+                UInt8(number)
+            }
+    }
+
 }
