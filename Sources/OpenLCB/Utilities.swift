@@ -58,36 +58,6 @@ struct Utilities {
             }
     }
 
-    /// Creates an Int from a [UInt8].
-    ///
-    /// - returns:
-    /// A number
-    ///
-    /// - parameters:
-    ///   - source: an array of UInt8; uses last 8 elements if source.count > 8
-    static public func intFromBytes(_ source: [UInt8]) -> Int {
-        // does not share code with uInt64FromBytes because Int
-        // does not convert to/from UInt64 if first bit is 1
-        source.reduce(0) { value, byte in
-            (value << 8) | Int(byte)
-        }
-    }
-
-    /// Creates an UInt64 from a [UInt8].
-    ///
-    /// - returns:
-    /// A number
-    ///
-    /// - parameters:
-    ///   - source: an array of UInt8; uses last 8 elements if source.count > 8
-    static public func uInt64FromBytes(_ source: [UInt8]) -> UInt64 {
-        // does not share code with intFromBytes because Int
-        // does not convert to/from UInt64 if first bit is 1
-        source.reduce(0) { value, byte in
-            (value << 8) | UInt64(byte)
-        }
-    }
-
     /// Create an array of Bits from a fixed width integer. The least significant bit is at index 0.
     ///
     /// - returns:
@@ -212,5 +182,20 @@ extension FixedWidthInteger {
             bytes >>= 1
         }
         return bits
+    }
+}
+
+extension FixedWidthInteger {
+    /// Creates an number from a [UInt8].
+    ///
+    /// - returns:
+    /// A number
+    ///
+    /// - parameters:
+    ///   - source: an array of UInt8; uses last N elements if source.count > bitwidth of result where N == bitwidth of result
+    static public func fromBytes<I: FixedWidthInteger>(_ source: [UInt8]) -> I {
+        source.reduce(0) { value, byte in
+            (value << 8) | I(byte)
+        }
     }
 }

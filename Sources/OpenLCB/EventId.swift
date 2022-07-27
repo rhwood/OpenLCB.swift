@@ -16,7 +16,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     public typealias RawValue = UInt64
 
     public enum EventIDError: Error {
-        case insufficientBytes
+        case incorrectByteCount
     }
 
     public let id: UInt64
@@ -26,12 +26,12 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public init(node: NodeId, suffix: UInt16) {
-        self.init(value: Utilities.uInt64FromBytes(node.bytes + Utilities.bytes(suffix)))
+        self.init(value: UInt64.fromBytes(node.bytes + Utilities.bytes(suffix)))
     }
 
     public init(bytes: [UInt8]) throws {
-        guard bytes.count == 8 else { throw EventIDError.insufficientBytes }
-        self.init(value: Utilities.uInt64FromBytes(bytes))
+        guard bytes.count == 8 else { throw EventIDError.incorrectByteCount }
+        self.init(value: UInt64.fromBytes(bytes))
     }
 
     public init(value: UInt64) {
@@ -54,7 +54,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public var suffix: UInt16 {
-        UInt16(Utilities.intFromBytes(Array(self.bytes[6...7])))
+        UInt16.fromBytes(Array(self.bytes[6...7]))
     }
 
     public var rawValue: RawValue {
