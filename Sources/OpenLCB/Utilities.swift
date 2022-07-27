@@ -58,17 +58,6 @@ struct Utilities {
             }
     }
 
-    /// Create an array of Bits from a fixed width integer. The least significant bit is at index 0.
-    ///
-    /// - returns:
-    /// An array of Bits
-    ///
-    /// - parameters:
-    ///   - bytes: the integer to get bits from
-    static public func bits<T: FixedWidthInteger>(_ bytes: T) -> [Bit] {
-        bytes.bits
-    }
-
     /// Create a String of bytes separated by spaces.
     ///
     /// - returns:
@@ -170,7 +159,8 @@ class LazyVar<Object, Property> {
 
 // source: https://stackoverflow.com/a/51770616
 extension FixedWidthInteger {
-    var bits: [Bit] {
+    /// An array of Bits representing the fixed width integer. The least significant bit is at index 0.
+    public var bits: [Bit] {
         var bytes = self
         // Fill an array of bits with zeros to the fixed width integer length
         var bits = [Bit](repeating: .zero, count: self.bitWidth)

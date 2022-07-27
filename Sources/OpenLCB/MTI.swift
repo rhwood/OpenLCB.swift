@@ -17,7 +17,7 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
 
     public let rawValue: UInt16
     private let _bits: LazyVar<MTI, [Bit]> = LazyVar { mti in
-        Utilities.bits(mti.rawValue)
+        mti.rawValue.bits
     }
     var bits: [Bit] {
         _bits.lazy(self)

@@ -60,9 +60,9 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testBits() {
-        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(0)))
-        XCTAssertEqual([.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(1)))
-        XCTAssertEqual([.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero], Utilities.bits(UInt8(2)))
+        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero], UInt8(0).bits)
+        XCTAssertEqual([.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero], UInt8(1).bits)
+        XCTAssertEqual([.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero], UInt8(2).bits)
     }
 
     func testBitDescription() {
@@ -89,12 +89,12 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(4, [.zero, .zero, .zero, .zero, .zero, .zero, .one, .zero].nibble(4))
         XCTAssertEqual(8, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .one].nibble(4))
         XCTAssertEqual(15, [.zero, .zero, .zero, .zero, .one, .one, .one, .one].nibble(4))
-        XCTAssertEqual(0, Utilities.bits(0).nibble(0))
-        XCTAssertEqual(1, Utilities.bits(1).nibble(0))
-        XCTAssertEqual(2, Utilities.bits(2).nibble(0))
-        XCTAssertEqual(4, Utilities.bits(4).nibble(0))
-        XCTAssertEqual(8, Utilities.bits(8).nibble(0))
-        XCTAssertEqual(15, Utilities.bits(15).nibble(0))
+        XCTAssertEqual(0, 0.bits.nibble(0))
+        XCTAssertEqual(1, 1.bits.nibble(0))
+        XCTAssertEqual(2, 2.bits.nibble(0))
+        XCTAssertEqual(4, 4.bits.nibble(0))
+        XCTAssertEqual(8, 8.bits.nibble(0))
+        XCTAssertEqual(15, 15.bits.nibble(0))
     }
 
     func testByte() {
@@ -104,18 +104,18 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(64, [.zero, .zero, .zero, .zero, .zero, .zero, .one, .zero].byte(0))
         XCTAssertEqual(128, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .one].byte(0))
         XCTAssertEqual(255, [.one, .one, .one, .one, .one, .one, .one, .one].byte(0))
-        XCTAssertEqual(0, Utilities.bits(UInt8(0)).byte(0))
-        XCTAssertEqual(1, Utilities.bits(UInt8(1)).byte(0))
-        XCTAssertEqual(2, Utilities.bits(UInt8(2)).byte(0))
-        XCTAssertEqual(64, Utilities.bits(UInt8(64)).byte(0))
-        XCTAssertEqual(128, Utilities.bits(UInt8(128)).byte(0))
-        XCTAssertEqual(255, Utilities.bits(UInt8(255)).byte(0))
-        XCTAssertEqual(0, Utilities.bits(UInt64(0)).byte(0))
-        XCTAssertEqual(1, Utilities.bits(UInt64(1)).byte(0))
-        XCTAssertEqual(2, Utilities.bits(UInt64(2)).byte(0))
-        XCTAssertEqual(64, Utilities.bits(UInt64(64)).byte(0))
-        XCTAssertEqual(128, Utilities.bits(UInt64(128)).byte(0))
-        XCTAssertEqual(255, Utilities.bits(UInt64(255)).byte(0))
+        XCTAssertEqual(0, UInt8(0).bits.byte(0))
+        XCTAssertEqual(1, UInt8(1).bits.byte(0))
+        XCTAssertEqual(2, UInt8(2).bits.byte(0))
+        XCTAssertEqual(64, UInt8(64).bits.byte(0))
+        XCTAssertEqual(128, UInt8(128).bits.byte(0))
+        XCTAssertEqual(255, UInt8(255).bits.byte(0))
+        XCTAssertEqual(0, UInt64(0).bits.byte(0))
+        XCTAssertEqual(1, UInt64(1).bits.byte(0))
+        XCTAssertEqual(2, UInt64(2).bits.byte(0))
+        XCTAssertEqual(64, UInt64(64).bits.byte(0))
+        XCTAssertEqual(128, UInt64(128).bits.byte(0))
+        XCTAssertEqual(255, UInt64(255).bits.byte(0))
     }
 
     func test3Nibbles() {
@@ -129,21 +129,21 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(256, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero].integer(start: 0, end: 11))
         XCTAssertEqual(4095, [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one].integer(start: 0, end: 11))
         // swiftlint:enable line_length
-        XCTAssertEqual(0, Utilities.bits(UInt16(0)).integer(start: 0, end: 11))
-        XCTAssertEqual(1, Utilities.bits(UInt16(1)).integer(start: 0, end: 11))
-        XCTAssertEqual(2, Utilities.bits(UInt16(2)).integer(start: 0, end: 11))
-        XCTAssertEqual(64, Utilities.bits(UInt16(64)).integer(start: 0, end: 11))
-        XCTAssertEqual(128, Utilities.bits(UInt16(128)).integer(start: 0, end: 11))
-        XCTAssertEqual(255, Utilities.bits(UInt16(255)).integer(start: 0, end: 11))
-        XCTAssertEqual(4095, Utilities.bits(UInt16(4095)).integer(start: 0, end: 11))
-        XCTAssertEqual(255, Utilities.bits(UInt16(4080)).integer(start: 4, end: 15))
-        XCTAssertEqual(0, Utilities.bits(UInt64(0)).integer(start: 0, end: 11))
-        XCTAssertEqual(1, Utilities.bits(UInt64(1)).integer(start: 0, end: 11))
-        XCTAssertEqual(2, Utilities.bits(UInt64(2)).integer(start: 0, end: 11))
-        XCTAssertEqual(64, Utilities.bits(UInt64(64)).integer(start: 0, end: 11))
-        XCTAssertEqual(128, Utilities.bits(UInt64(128)).integer(start: 0, end: 11))
-        XCTAssertEqual(255, Utilities.bits(UInt64(255)).integer(start: 0, end: 11))
-        XCTAssertEqual(255, Utilities.bits(UInt64(4080)).integer(start: 4, end: 15))
+        XCTAssertEqual(0, UInt16(0).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(1, UInt16(1).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(2, UInt16(2).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(64, UInt16(64).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(128, UInt16(128).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(255, UInt16(255).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(4095, UInt16(4095).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(255, UInt16(4080).bits.integer(start: 4, end: 15))
+        XCTAssertEqual(0, UInt64(0).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(1, UInt64(1).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(2, UInt64(2).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(64, UInt64(64).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(128, UInt64(128).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(255, UInt64(255).bits.integer(start: 0, end: 11))
+        XCTAssertEqual(255, UInt64(4080).bits.integer(start: 4, end: 15))
     }
 
     func testCanHeader() {
