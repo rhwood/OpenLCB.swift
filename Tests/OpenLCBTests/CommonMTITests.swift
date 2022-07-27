@@ -28,7 +28,7 @@ class CommonMTITests: XCTestCase {
     // when adding new cases, search for the regex 'case (.*): return "(.*)"' and
     // replace it with 'XCTAssertEqual("$2", "\\(CommonMTI$1)")' (be careful to ensure this comment
     // is not changed when running regex)
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     func testDescription() throws {
         XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationComplete)")
         XCTAssertEqual("Initialization Complete", "\(CommonMTI.initializationCompleteSimpleSetSufficient)")

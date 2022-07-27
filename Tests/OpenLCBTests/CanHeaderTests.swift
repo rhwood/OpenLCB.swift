@@ -17,7 +17,9 @@ import XCTest
 
 class CanHeaderTests: XCTestCase {
 
+    // swiftlint:disable:next line_length
     let xpressnet: [Bit] = [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero, .one, .one]
+    // swiftlint:disable:next line_length
     let stream: [Bit] = [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .one, .one, .one, .one]
 
     override func setUpWithError() throws {

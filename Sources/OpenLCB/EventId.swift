@@ -49,7 +49,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     public var nodeID: NodeId {
         // Force try to avoid caller needing to use in try...catch block
         // since this call is known to succeed
-        // swiftlint:disable force_try
+        // swiftlint:disable:next force_try
         try! NodeId(bytes: Array(self.bytes[..<6]))
     }
 

@@ -119,6 +119,7 @@ class UtilitiesTests: XCTestCase {
     }
 
     func test3Nibbles() {
+        // swiftlint:disable line_length
         XCTAssertEqual(0, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
         XCTAssertEqual(1, [.one, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
         XCTAssertEqual(2, [.zero, .one, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
@@ -127,6 +128,7 @@ class UtilitiesTests: XCTestCase {
         XCTAssertEqual(255, [.one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero].integer(start: 0, end: 11))
         XCTAssertEqual(256, [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero].integer(start: 0, end: 11))
         XCTAssertEqual(4095, [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one].integer(start: 0, end: 11))
+        // swiftlint:enable line_length
         XCTAssertEqual(0, Utilities.bits(UInt16(0)).integer(start: 0, end: 11))
         XCTAssertEqual(1, Utilities.bits(UInt16(1)).integer(start: 0, end: 11))
         XCTAssertEqual(2, Utilities.bits(UInt16(2)).integer(start: 0, end: 11))
@@ -145,6 +147,7 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testCanHeader() {
+        // swiftlint:disable:next line_length
         let bit: [Bit] = [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero, .one, .one]
         XCTAssertEqual(4095, bit.integer(start: 0, end: 11))
         XCTAssertEqual(2080, bit.integer(start: 12, end: 23))
