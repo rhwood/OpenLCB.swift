@@ -16,10 +16,10 @@ struct InitializationCompleteMessage: Message {
 
     let source: NodeId
 
-    let mti: CommonMTI
+    let mti: MTI
 
     init(source: NodeId) {
         self.source = source
-        self.mti = CommonMTI.initializationComplete
+        self.mti = CommonMTI.initializationComplete.rawValue
     }
 }
