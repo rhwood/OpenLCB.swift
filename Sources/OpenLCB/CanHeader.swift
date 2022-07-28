@@ -24,6 +24,10 @@ public struct CanHeader {
         bits.integer(start: 27, end: 28)
     }
 
+    public var variable: [Bit] {
+        Array(bits[12...26])
+    }
+
     public var type: UInt8 {
         bits.integer(start: 24, end: 26)
     }

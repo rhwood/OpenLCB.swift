@@ -69,4 +69,11 @@ class CanHeaderTests: XCTestCase {
         XCTAssertEqual(0xFFF, CanHeader(bits: xpressnet).sourceAlias)
         XCTAssertEqual(0xFFF, CanHeader(bits: stream).sourceAlias)
     }
+
+    func testVariable() {
+        // swiftlint:disable:next line_length
+        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero], CanHeader(bits: xpressnet).variable)
+        // swiftlint:disable:next line_length
+        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .one, .one], CanHeader(bits: stream).variable)
+    }
 }
