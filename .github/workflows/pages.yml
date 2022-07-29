@@ -32,7 +32,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Compile Documentation
-        run: swift package --allow-writing-to-directory ./.build generate-documentation --transform-for-static-hosting --hosting-base-path OpenLCB.swift \--target OpenLCB --output-path ./.build/docs
+        run: swift package --allow-writing-to-directory ./.build generate-documentation --transform-for-static-hosting --hosting-base-path OpenLCB.swift --target OpenLCB --output-path ./.build/docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
