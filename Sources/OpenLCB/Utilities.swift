@@ -79,7 +79,6 @@ extension Array where Element == UInt8 {
     public func byteString(separator: String = ".") -> String {
         "0x" + self.map { String(format: "%02X", $0 ) }.joined(separator: separator)
     }
-
 }
 
 /// Lazily compute, but not recompute, a var in a struct
