@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- ``NodeId`` alias generator based on the preferred pseudo random alias generation algorithm in
+ ``NodeId`` CAN alias generator based on the preferred pseudo random alias generation algorithm in
  [OpenLCB Can Frame Transfer Technical Note](http://old.openlcb.org/trunk/specs/CanFrameTransferTN.pdf).
  */
 struct CanAliasGenerator {
@@ -21,7 +21,7 @@ struct CanAliasGenerator {
     private var upperHalf: UInt32 = 0
     private var lowerHalf: UInt32 = 0
     /**
-     The node for which aliases are generated.
+     Node for which aliases are generated.
      */
     let id: NodeId
 
@@ -38,7 +38,7 @@ struct CanAliasGenerator {
     }
 
     /**
-     The seed that used to generate the next alias.
+     Seed used to generate ``alias``.
      */
     var seed: UInt64 {
         (UInt64(upperHalf) << 24) | UInt64(lowerHalf)
@@ -86,8 +86,8 @@ struct CanAliasGenerator {
     }
 
     /**
-     Reset the generator. The results of reseting the generator are the same as creating a new generator for the
-     same ``NodeId``.
+     Reset the generator. An ``alias`` retrieved after reseting the generator are the same as the alias retrieved
+     after creating a new generator for the same ``NodeId``.
      */
     mutating func reset() {
         upperHalf = UInt32((id.rawValue & 0xFFFFFF000000) >> 24)
