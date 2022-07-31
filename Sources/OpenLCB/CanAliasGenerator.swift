@@ -73,8 +73,8 @@ struct CanAliasGenerator {
             let temp2 = (lowerHalf << 9) & 0xFFFFFF
 
             // add
-            lowerHalf = lowerHalf + temp2 + 0x7A4BA9
-            upperHalf = upperHalf + temp1 + 0x1B0CA3
+            lowerHalf += temp2 + 0x7A4BA9
+            upperHalf += temp1 + 0x1B0CA3
 
             // carry
             upperHalf = (upperHalf & 0xFFFFFF) | ((lowerHalf & 0xFF000000) >> 24)

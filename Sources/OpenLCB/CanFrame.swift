@@ -42,7 +42,7 @@ public struct CanFrame {
     }
 
     /**
-     ``true`` if the frame is an OpenLCB message.
+     True if the frame is an OpenLCB message; false otherwise.
 
      Always the opposite of ``isCANControlFrame``
      */
@@ -51,7 +51,7 @@ public struct CanFrame {
     }
 
     /**
-     ``true`` if the frame is a CAN control message.
+     True if the frame is a CAN control message; false otherwise.
 
      Always the opposite of ``isOpenLCBMessage``
      */
