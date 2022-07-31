@@ -18,6 +18,28 @@
 public struct CanFrame {
 
     /**
+     The possible types of OpenLCB messages in a CAN frame.
+     */
+    public enum FrameType: UInt8 {
+        /// Reserved for future use; included in API to avoid nil conversions
+        case reserved = 0
+        /// Global and addressed MTI-based message
+        case globalAddressedMTI = 1
+        /// Datagram requiring only one frame to transmit
+        case datagramCompleteInFrame = 2
+        /// First frame of a multi-frame datagram
+        case datagramFirstFrame = 3
+        /// Middle frame(s) of a multi-frame datagram
+        case datagramMiddleFrame = 4
+        /// Final frame of a multi-frame datagram
+        case datagramFinalFrame = 5
+        /// Reserved for future use; included in API to avoid nil conversions
+        case reserved2 = 6
+        /// Stream data
+        case streamData = 7
+    }
+
+    /**
      The CAN header. Do not rely on this being availble in future versions of this library.
      */
     public let header: CanHeader
@@ -37,7 +59,7 @@ public struct CanFrame {
     /**
      Type of message. This is likely to change to an enum of types.
      */
-    public var type: UInt8 {
+    public var type: FrameType {
         header.type
     }
 

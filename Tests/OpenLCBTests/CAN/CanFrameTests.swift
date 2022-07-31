@@ -15,7 +15,7 @@
 @testable import OpenLCB
 import XCTest
 
-class CanHeaderTests: XCTestCase {
+class CanFrameTests: XCTestCase {
 
     // swiftlint:disable:next line_length
     let xpressnet: [Bit] = [.one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .one, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero, .one, .one]
@@ -30,50 +30,43 @@ class CanHeaderTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testBits() throws {
-        XCTAssertEqual(xpressnet, CanHeader(bits: xpressnet).bits)
-        XCTAssertEqual(stream, CanHeader(bits: stream).bits)
+    func testData() throws {
+        XCTAssertEqual([], CanFrame(header: CanHeader(bits: xpressnet), data: []).data)
+        XCTAssertEqual([], CanFrame(header: CanHeader(bits: stream), data: []).data)
     }
 
     func testPrefix() {
-        XCTAssertEqual(3, CanHeader(bits: xpressnet).prefix)
-        XCTAssertEqual(3, CanHeader(bits: stream).prefix)
+        XCTAssertEqual(3, CanFrame(header: CanHeader(bits: xpressnet), data: []).prefix)
+        XCTAssertEqual(3, CanFrame(header: CanHeader(bits: stream), data: []).prefix)
     }
 
     func testType() {
-        XCTAssertEqual(1, CanHeader(bits: xpressnet).type)
-        XCTAssertEqual(7, CanHeader(bits: stream).type)
+        XCTAssertEqual(.globalAddressedMTI, CanFrame(header: CanHeader(bits: xpressnet), data: []).type)
+        XCTAssertEqual(.streamData, CanFrame(header: CanHeader(bits: stream), data: []).type)
     }
 
     func testIsOpenLCBMessage() {
-        XCTAssertTrue(CanHeader(bits: xpressnet).isOpenLCBMessage)
-        XCTAssertTrue(CanHeader(bits: stream).isOpenLCBMessage)
+        XCTAssertTrue(CanFrame(header: CanHeader(bits: xpressnet), data: []).isOpenLCBMessage)
+        XCTAssertTrue(CanFrame(header: CanHeader(bits: stream), data: []).isOpenLCBMessage)
     }
 
     func testIsCANControlFrame() {
-        XCTAssertFalse(CanHeader(bits: xpressnet).isCANControlFrame)
-        XCTAssertFalse(CanHeader(bits: stream).isCANControlFrame)
+        XCTAssertFalse(CanFrame(header: CanHeader(bits: xpressnet), data: []).isCANControlFrame)
+        XCTAssertFalse(CanFrame(header: CanHeader(bits: stream), data: []).isCANControlFrame)
     }
 
     func testCanMTI() {
-        XCTAssertEqual(0x820, CanHeader(bits: xpressnet).canMTI)
-        XCTAssertNil(CanHeader(bits: stream).canMTI)
+        XCTAssertEqual(0x820, CanFrame(header: CanHeader(bits: xpressnet), data: []).canMTI)
+        XCTAssertNil(CanFrame(header: CanHeader(bits: stream), data: []).canMTI)
     }
 
     func testDestinationAlias() {
-        XCTAssertNil(CanHeader(bits: xpressnet).destinationAlias)
-        XCTAssertEqual(0x820, CanHeader(bits: stream).destinationAlias)
+        XCTAssertNil(CanFrame(header: CanHeader(bits: xpressnet), data: []).destinationAlias)
+        XCTAssertEqual(0x820, CanFrame(header: CanHeader(bits: stream), data: []).destinationAlias)
     }
 
     func testSourceAlias() {
-        XCTAssertEqual(0xFFF, CanHeader(bits: xpressnet).sourceAlias)
-        XCTAssertEqual(0xFFF, CanHeader(bits: stream).sourceAlias)
-    }
-
-    func testVariable() {
-        // swiftlint:disable:next line_length
-        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .zero, .zero], CanHeader(bits: xpressnet).variable)
-        // swiftlint:disable:next line_length
-        XCTAssertEqual([.zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .zero, .zero, .zero, .one, .one, .one, .one], CanHeader(bits: stream).variable)
+        XCTAssertEqual(0xFFF, CanFrame(header: CanHeader(bits: xpressnet), data: []).sourceAlias)
+        XCTAssertEqual(0xFFF, CanFrame(header: CanHeader(bits: stream), data: []).sourceAlias)
     }
 }

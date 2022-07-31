@@ -28,8 +28,8 @@ public struct CanHeader {
         Array(bits[12...26])
     }
 
-    public var type: UInt8 {
-        bits.integer(start: 24, end: 26)
+    public var type: CanFrame.FrameType {
+        CanFrame.FrameType(rawValue: bits.integer(start: 24, end: 26)) ?? .globalAddressedMTI
     }
 
     public var isOpenLCBMessage: Bool {
@@ -41,7 +41,7 @@ public struct CanHeader {
     }
 
     public var canMTI: UInt16? {
-        if type == 1 {
+        if type == .globalAddressedMTI {
             return bits.integer(start: 12, end: 23)
         }
         return nil
@@ -49,7 +49,7 @@ public struct CanHeader {
 
     public var destinationAlias: UInt16? {
         switch type {
-        case 2, 3, 4, 5, 7:
+        case .datagramCompleteInFrame, .datagramFirstFrame, .datagramMiddleFrame, .datagramFinalFrame, .streamData:
             return bits.integer(start: 12, end: 23)
         default:
             return nil
