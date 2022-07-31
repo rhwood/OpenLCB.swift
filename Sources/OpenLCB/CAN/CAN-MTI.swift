@@ -14,21 +14,29 @@
 
 public extension MTI {
 
-    static func fromCanFrame(_ frame: CanFrame) -> MTI? {
+    /**
+     Create an MTI from a CAN frame.
+
+     If the CAN frame does not have an MTI, the result is ``nil``.
+
+     - parameters:
+     - frame: the CAN frame, which may or may not contain a MTI
+     */
+    init?(frame: CanFrame) {
+        var mti: UInt16?
         if frame.isOpenLCBMessage {
             switch frame.type {
             case 1:
-                if let mti = frame.canMTI {
-                    return MTI(value: mti)
-                }
+                mti = frame.canMTI
             case 2, 3, 4, 5:
-                return CommonMTI.datagram.rawValue
+                mti = CommonMTI.datagram.rawValue.rawValue
             case 7:
-                return CommonMTI.streamDataSend.rawValue
+                mti = CommonMTI.streamDataSend.rawValue.rawValue
             default:
                 break
             }
         }
-        return nil
+        guard let mti = mti else { return nil }
+        self.init(rawValue: mti)
     }
 }

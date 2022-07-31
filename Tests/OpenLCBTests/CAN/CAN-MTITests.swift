@@ -30,7 +30,7 @@ class CanMTITests: XCTestCase {
         let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .one, .one]), data: [])
         XCTAssertTrue(frame.isOpenLCBMessage)
         XCTAssertEqual(2, frame.type)
-        XCTAssertEqual(CommonMTI.datagram.rawValue, MTI.fromCanFrame(frame))
+        XCTAssertEqual(CommonMTI.datagram.rawValue, MTI(frame: frame))
     }
 
     func testMTIFromStream() throws {
@@ -38,7 +38,7 @@ class CanMTITests: XCTestCase {
         let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .one, .one, .one, .one]), data: [])
         XCTAssertTrue(frame.isOpenLCBMessage)
         XCTAssertEqual(7, frame.type)
-        XCTAssertEqual(CommonMTI.streamDataSend.rawValue, MTI.fromCanFrame(frame))
+        XCTAssertEqual(CommonMTI.streamDataSend.rawValue, MTI(frame: frame))
     }
 
     func testMTIFromXpressnet() throws {
@@ -47,7 +47,7 @@ class CanMTITests: XCTestCase {
         XCTAssertTrue(frame.isOpenLCBMessage)
         XCTAssertEqual(1, frame.type)
         XCTAssertEqual(0x820, frame.canMTI)
-        XCTAssertEqual(CommonMTI.xpressnet.rawValue, MTI.fromCanFrame(frame))
+        XCTAssertEqual(CommonMTI.xpressnet.rawValue, MTI(frame: frame))
     }
 
     func testMTIFrom0x0000() throws {
@@ -55,14 +55,14 @@ class CanMTITests: XCTestCase {
         let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .zero, .zero, .one, .one]), data: [])
         XCTAssertTrue(frame.isOpenLCBMessage)
         XCTAssertEqual(1, frame.type)
-        XCTAssertEqual(0x0000, MTI.fromCanFrame(frame)?.rawValue)
+        XCTAssertEqual(0x0000, MTI(frame: frame)?.rawValue)
     }
 
     func testNonOpenLCBMessageMTI() throws {
         // swiftlint:disable:next line_length
         let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero]), data: [])
         XCTAssertFalse(frame.isOpenLCBMessage)
-        XCTAssertNil(MTI.fromCanFrame(frame))
+        XCTAssertNil(MTI(frame: frame))
     }
 
     func testInvalidMessageMTI() throws {
@@ -71,6 +71,6 @@ class CanMTITests: XCTestCase {
         let frame = CanFrame(header: CanHeader(bits: [.zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .zero, .one, .one]), data: [])
         XCTAssertTrue(frame.isOpenLCBMessage)
         XCTAssertEqual(0, frame.type)
-        XCTAssertNil(MTI.fromCanFrame(frame))
+        XCTAssertNil(MTI(frame: frame))
     }
 }
