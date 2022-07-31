@@ -26,11 +26,11 @@ public extension MTI {
         var mti: UInt16?
         if frame.isOpenLCBMessage {
             switch frame.type {
-            case 1:
+            case .globalAddressedMTI:
                 mti = frame.canMTI
-            case 2, 3, 4, 5:
+            case .datagramCompleteInFrame, .datagramFirstFrame, .datagramMiddleFrame, .datagramFinalFrame:
                 mti = CommonMTI.datagram.rawValue.rawValue
-            case 7:
+            case .streamData:
                 mti = CommonMTI.streamDataSend.rawValue.rawValue
             default:
                 break

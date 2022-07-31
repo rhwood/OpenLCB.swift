@@ -41,8 +41,8 @@ class CanFrameTests: XCTestCase {
     }
 
     func testType() {
-        XCTAssertEqual(1, CanFrame(header: CanHeader(bits: xpressnet), data: []).type)
-        XCTAssertEqual(7, CanFrame(header: CanHeader(bits: stream), data: []).type)
+        XCTAssertEqual(.globalAddressedMTI, CanFrame(header: CanHeader(bits: xpressnet), data: []).type)
+        XCTAssertEqual(.streamData, CanFrame(header: CanHeader(bits: stream), data: []).type)
     }
 
     func testIsOpenLCBMessage() {
