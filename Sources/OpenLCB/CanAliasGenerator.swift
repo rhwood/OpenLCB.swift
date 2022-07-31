@@ -26,7 +26,12 @@ struct CanAliasGenerator {
     let id: NodeId
 
     /**
-     The generated alias.
+     Number of times the ``alias`` has been generated.
+     */
+    var iterations: Int = 0
+
+    /**
+     Generated alias.
      */
     var alias: UInt16 {
         UInt16((upperHalf ^ lowerHalf ^ (upperHalf >> 12) ^ (lowerHalf >> 12)) & 0xFFF)
@@ -74,6 +79,9 @@ struct CanAliasGenerator {
             // carry
             upperHalf = (upperHalf & 0xFFFFFF) | ((lowerHalf & 0xFF000000) >> 24)
             lowerHalf = lowerHalf & 0xFFFFFF
+
+            // increment iterations
+            iterations += 1
         } while alias == 0
     }
 
@@ -84,6 +92,7 @@ struct CanAliasGenerator {
     mutating func reset() {
         upperHalf = UInt32((id.rawValue & 0xFFFFFF000000) >> 24)
         lowerHalf = UInt32(id.rawValue & 0xFFFFFF)
+        iterations = 0
         if alias == 0 { _nextAlias() }
     }
 }
