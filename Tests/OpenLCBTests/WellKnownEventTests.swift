@@ -34,4 +34,9 @@ class WellKnownEventTests: XCTestCase {
         XCTAssertTrue(WellKnownEvent.isWellKnown(EventId(value: 0xFFFF)))
         XCTAssertFalse(WellKnownEvent.isWellKnown(EventId(value: 0xFFFFFFFFFFFFFFFF)))
     }
+
+    func testDescription() {
+        XCTAssertEqual("0x00.00.00.00.00.00.FF.FF", "\(WellKnownEvent.emergencyOff)")
+        XCTAssertEqual("0x01.01.00.00.00.00.02.01", "\(WellKnownEvent.duplicateNodeId)")
+    }
 }

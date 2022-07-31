@@ -16,7 +16,7 @@ public protocol Message: CustomStringConvertible {
 
     var source: NodeId { get }
 
-    var mti: CommonMTI { get }
+    var mti: MTI { get }
 
     var description: String { get }
 

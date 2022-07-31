@@ -12,14 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-struct InitializationCompleteMessage: Message {
+public extension MTI {
 
-    let source: NodeId
-
-    let mti: MTI
-
-    init(source: NodeId) {
-        self.source = source
-        self.mti = CommonMTI.initializationComplete.rawValue
+    static func fromCanFrame(_ frame: CanFrame) -> MTI? {
+        if frame.isOpenLCBMessage {
+            switch frame.type {
+            case 1:
+                if let mti = frame.canMTI {
+                    return MTI(value: mti)
+                }
+            case 2, 3, 4, 5:
+                return CommonMTI.datagram.rawValue
+            case 7:
+                return CommonMTI.streamDataSend.rawValue
+            default:
+                break
+            }
+        }
+        return nil
     }
 }

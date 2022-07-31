@@ -22,14 +22,11 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     public let id: UInt64
 
     public var bytes: [UInt8] {
-        Utilities.bytes(id).suffix(6)
+        id.bytes().suffix(6)
     }
 
     public init(node: NodeId) {
-        // Force try to avoid caller needing to use in try...catch block
-        // since this call is known to succeed
-        // swiftlint:disable force_try
-        try! self.init(bytes: node.bytes)
+        self.init(value: node.id)
     }
 
     public init() {
@@ -38,7 +35,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
 
     public init(bytes: [UInt8]) throws {
         guard bytes.count >= 6 else { throw NodeIDError.insufficentBytes }
-        self.init(value: Utilities.uInt64FromBytes(Array(bytes[..<6])))
+        self.init(value: UInt64.fromBytes(Array(bytes[..<6])))
     }
 
     public init(value: UInt64) {
@@ -47,7 +44,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     }
 
     public init(value: String) throws {
-        try self.init(bytes: Utilities.bytes(value))
+        try self.init(bytes: value.bytes)
     }
 
     public init?(rawValue: RawValue) {
@@ -55,10 +52,10 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     }
 
     public var rawValue: RawValue {
-        Utilities.uInt64FromBytes(bytes)
+        RawValue.fromBytes(bytes)
     }
 
     public var description: String {
-        Utilities.byteString(bytes)
+        bytes.byteString()
     }
 }
