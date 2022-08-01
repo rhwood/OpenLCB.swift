@@ -26,12 +26,12 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public init(node: NodeId, suffix: UInt16) {
-        self.init(value: UInt64.fromBytes(node.bytes + suffix.bytes()))
+        self.init(value: UInt64(bytes: node.bytes + suffix.bytes()))
     }
 
     public init(bytes: [UInt8]) throws {
         guard bytes.count == 8 else { throw EventIDError.incorrectByteCount }
-        self.init(value: UInt64.fromBytes(bytes))
+        self.init(value: UInt64(bytes: bytes))
     }
 
     public init(value: UInt64) {
@@ -54,7 +54,7 @@ public struct EventId: Equatable, Hashable, RawRepresentable, CustomStringConver
     }
 
     public var suffix: UInt16 {
-        UInt16.fromBytes(Array(self.bytes[6...7]))
+        UInt16(bytes: Array(self.bytes[6...7]))
     }
 
     public var rawValue: RawValue {

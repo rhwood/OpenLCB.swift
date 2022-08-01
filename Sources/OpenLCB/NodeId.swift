@@ -35,7 +35,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
 
     public init(bytes: [UInt8]) throws {
         guard bytes.count >= 6 else { throw NodeIDError.insufficentBytes }
-        self.init(value: UInt64.fromBytes(Array(bytes[..<6])))
+        self.init(value: UInt64(bytes: Array(bytes[..<6])))
     }
 
     public init(value: UInt64) {
@@ -52,7 +52,7 @@ public struct NodeId: Equatable, Hashable, RawRepresentable, CustomStringConvert
     }
 
     public var rawValue: RawValue {
-        RawValue.fromBytes(bytes)
+        RawValue(bytes: bytes)
     }
 
     public var description: String {

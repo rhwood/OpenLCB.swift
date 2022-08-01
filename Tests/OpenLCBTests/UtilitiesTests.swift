@@ -49,14 +49,14 @@ class UtilitiesTests: XCTestCase {
     }
 
     func testIntFromBytes() {
-        XCTAssertEqual(0x010203040506, Int.fromBytes([1, 2, 3, 4, 5, 6]))
-        XCTAssertEqual(0x0102030405, Int.fromBytes([0, 1, 2, 3, 4, 5]))
+        XCTAssertEqual(0x010203040506, Int(bytes:  [1, 2, 3, 4, 5, 6]))
+        XCTAssertEqual(0x0102030405, Int(bytes:  [0, 1, 2, 3, 4, 5]))
     }
 
     func testUInt64FromBytes() {
-        XCTAssertEqual(0x010203040506, UInt64.fromBytes([1, 2, 3, 4, 5, 6]))
-        XCTAssertEqual(0x0102030405, UInt64.fromBytes([0, 1, 2, 3, 4, 5]))
-        XCTAssertEqual(0x100, UInt64.fromBytes([0, 0, 0, 0, 0, 0, 0, 0, 1, 0]))
+        XCTAssertEqual(0x010203040506, UInt64(bytes:  [1, 2, 3, 4, 5, 6]))
+        XCTAssertEqual(0x0102030405, UInt64(bytes:  [0, 1, 2, 3, 4, 5]))
+        XCTAssertEqual(0x100, UInt64(bytes:  [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]))
     }
 
     func testBits() {

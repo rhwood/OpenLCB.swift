@@ -125,11 +125,10 @@ extension FixedWidthInteger {
 
      - parameters:
      - bytes: byte array
-     - returns: an integer
      */
-    static public func fromBytes<I: FixedWidthInteger>(_ bytes: [UInt8]) -> I {
-        bytes.reduce(0) { value, byte in
-            (value << 8) | I(byte)
+    public init(bytes: [UInt8]) {
+        self = bytes.reduce(0) { value, byte in
+            (value << 8) | Self(byte)
         }
     }
 
