@@ -10,14 +10,13 @@ A [Swift](https://swift.org) implementation of the [OpenLCB](https://openlcb.org
 
 This library has the following design criteria:
 
-- Compiles on macOS and Linux
-    - This may expend to Windows and other Apple product platforms
+- Compiles on macOS and Linux (this may expend to Windows and other Apple product platforms)
 - Supports the following transports
     - TCP
-    - CAN
-        - Includes an abstraction layer for CAN connections, but makes no assumptions about the CAN bus is connected to
-          the computer this library is used on
+    - CAN (includes an abstraction layer for CAN connections, but makes no assumptions about the CAN bus is connected to
+          the computer this library is used on)
 - Includes no UI code as UI code is highly platform specific
+- Fully testable (any code that can't be reliably tested needs to be in a separate library that depends on this library)
 
 @Comment {
 ## Topics
