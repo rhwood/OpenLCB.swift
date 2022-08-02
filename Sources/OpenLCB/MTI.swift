@@ -72,6 +72,8 @@ public struct MTI: RawRepresentable, Equatable, CustomStringConvertible {
 }
 
 extension MTI: ExpressibleByIntegerLiteral {
+    public typealias IntegerLiteralType = UInt16
+
     public init(integerLiteral value: IntegerLiteralType) {
         self.init(value: UInt16(value))
     }
