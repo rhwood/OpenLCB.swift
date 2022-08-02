@@ -14,9 +14,9 @@
 
 // Right now I am ambivalent about needing this class, or if needed,
 // exposing it outside the library (i.e., if needed to keep some complexity
-// or inhertance issues out of CanFrame, should it be just an internal
+// or inhertance issues out of CANFrame, should it be just an internal
 // implementation detail?)
-public struct CanHeader {
+public struct CANHeader {
 
     public let bits: [Bit]
 
@@ -28,8 +28,8 @@ public struct CanHeader {
         Array(bits[12...26])
     }
 
-    public var type: CanFrame.FrameType {
-        CanFrame.FrameType(rawValue: bits.integer(start: 24, end: 26)) ?? .globalAddressedMTI
+    public var type: CANFrame.FrameType {
+        CANFrame.FrameType(rawValue: bits.integer(start: 24, end: 26)) ?? .globalAddressedMTI
     }
 
     public var isOpenLCBMessage: Bool {
@@ -40,7 +40,7 @@ public struct CanHeader {
         !isOpenLCBMessage
     }
 
-    public var canMTI: UInt16? {
+    public var CANMTI: UInt16? {
         if type == .globalAddressedMTI {
             return bits.integer(start: 12, end: 23)
         }

@@ -14,9 +14,9 @@
 
 /**
  ``NodeId`` CAN alias generator based on the preferred pseudo random alias generation algorithm in
- [OpenLCB Can Frame Transfer Technical Note](http://old.openlcb.org/trunk/specs/CanFrameTransferTN.pdf).
+ [OpenLCB CAN Frame Transfer Technical Note](http://old.openlcb.org/trunk/specs/CanFrameTransferTN.pdf).
  */
-struct CanAliasGenerator {
+struct CANAliasGenerator {
 
     private var upperHalf: UInt32 = 0
     private var lowerHalf: UInt32 = 0

@@ -15,7 +15,7 @@
 @testable import OpenLCB
 import XCTest
 
-class CanAliasGeneratorTests: XCTestCase {
+class CANAliasGeneratorTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -26,7 +26,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x0() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x0))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x0))
         XCTAssertEqual(0x11E, prng.alias)
         XCTAssertEqual(0x1B0CA37A4BA9, prng.seed)
         XCTAssertEqual(1, prng.iterations)
@@ -42,7 +42,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x020121000012() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x020121000012))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x020121000012))
         XCTAssertEqual(0x113, prng.alias)
         XCTAssertEqual(0x020121000012, prng.seed)
         XCTAssertEqual(0, prng.iterations)
@@ -52,7 +52,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x020112000021() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x020112000021))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x020112000021))
         XCTAssertEqual(0x113, prng.alias)
         XCTAssertEqual(0x020112000021, prng.seed)
         XCTAssertEqual(0, prng.iterations)
@@ -62,7 +62,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x020111000022() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x020111000022))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x020111000022))
         XCTAssertEqual(0x113, prng.alias)
         XCTAssertEqual(0x020111000022, prng.seed)
         XCTAssertEqual(0, prng.iterations)
@@ -72,7 +72,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x020122000011() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x020122000011))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x020122000011))
         XCTAssertEqual(0x113, prng.alias)
         XCTAssertEqual(0x020122000011, prng.seed)
         XCTAssertEqual(0, prng.iterations)
@@ -82,7 +82,7 @@ class CanAliasGeneratorTests: XCTestCase {
     }
 
     func testPRNG_0x1234567890AB() {
-        var prng = CanAliasGenerator(for: NodeId(value: 0x1234567890AB))
+        var prng = CANAliasGenerator(for: NodeId(value: 0x1234567890AB))
         XCTAssertEqual(0x257, prng.alias)
         XCTAssertEqual(0x1234567890AB, prng.seed)
         XCTAssertEqual(0, prng.iterations)

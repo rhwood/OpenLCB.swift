@@ -15,7 +15,7 @@
 /**
  A CAN Frame with OpenLCB-specific details.
  */
-public struct CanFrame {
+public struct CANFrame {
 
     /**
      The possible types of OpenLCB messages in a CAN frame.
@@ -42,7 +42,7 @@ public struct CanFrame {
     /**
      The CAN header. Do not rely on this being availble in future versions of this library.
      */
-    public let header: CanHeader
+    public let header: CANHeader
 
     /**
      CAN frame data payload. Nil if the frame had no payload.
@@ -82,10 +82,10 @@ public struct CanFrame {
     }
 
     /**
-     The MTI within the CAN frame. Nil if there is no MTI. Convert to a full MTI using ``MTI/fromCanFrame(_:)``.
+     The MTI within the CAN frame. Nil if there is no MTI. Convert to a full MTI using ``MTI/init(frame:)``.
      */
-    public var canMTI: UInt16? {
-        header.canMTI
+    public var CANMTI: UInt16? {
+        header.CANMTI
     }
 
     /**
