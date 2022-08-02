@@ -22,12 +22,12 @@ public extension MTI {
      - parameters:
      - frame: the CAN frame, which may or may not contain a MTI
      */
-    init?(frame: CanFrame) {
+    init?(frame: CANFrame) {
         var mti: UInt16?
         if frame.isOpenLCBMessage {
             switch frame.type {
             case .globalAddressedMTI:
-                mti = frame.canMTI
+                mti = frame.CANMTI
             case .datagramCompleteInFrame, .datagramFirstFrame, .datagramMiddleFrame, .datagramFinalFrame:
                 mti = CommonMTI.datagram.rawValue.rawValue
             case .streamData:
