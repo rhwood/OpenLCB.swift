@@ -24,6 +24,18 @@ class MTITests: XCTestCase {
         XCTAssertEqual(MTI(rawValue: 0x1234), MTI(value: 0x1234))
     }
 
+    func testIntegerLiteralInit() {
+        var mti: MTI = 0
+        XCTAssertNotNil(mti)
+        XCTAssertEqual(0, mti.rawValue)
+        mti = 0xFFFF
+        XCTAssertNotNil(mti)
+        XCTAssertEqual(0xFFFF, mti.rawValue)
+        mti = 0x1234
+        XCTAssertNotNil(mti)
+        XCTAssertEqual(0x1234, mti.rawValue)
+    }
+
     func testSpecial() {
         XCTAssertFalse(CommonMTI.initializationComplete.rawValue.special)
         XCTAssertFalse(CommonMTI.tractionControlCommand.rawValue.special)
